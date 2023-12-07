@@ -53,9 +53,17 @@ function calculateHours(inputDays) {
 document.getElementById('hoursForm').addEventListener('submit', function(event) {
     event.preventDefault();
 
-    // ... (existing code to get input values and calculate hours)
+    // Get the values from the form
+    const MoDo = parseInt(document.getElementById('MoDo').value, 10) || 0;
+    const Fr = parseInt(document.getElementById('Fr').value, 10) || 0;
+    const Sa = parseInt(document.getElementById('Sa').value, 10) || 0;
+    const So = parseInt(document.getElementById('So').value, 10) || 0;
+    const Feiertag = parseInt(document.getElementById('Feiertag').value, 10) || 0;
 
-    // Generate table HTML with the results
+    // Call the calculateHours function with the values from the form
+    const result = calculateHours({ MoDo, Fr, Sa, So, Feiertag });
+
+    // Generate and display the table with the results
     const resultsDiv = document.getElementById('results');
     resultsDiv.innerHTML = `
         <table style="width:100%; border-collapse: collapse;">
@@ -90,3 +98,4 @@ document.getElementById('hoursForm').addEventListener('submit', function(event) 
         </table>
     `;
 });
+
