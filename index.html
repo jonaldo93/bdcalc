@@ -1,3 +1,6 @@
+Certainly! Here's a complete HTML code with integrated CSS that you can copy and paste as is. This code includes the form for inputting workdays, CSS for styling, and the placeholder for your JavaScript calculations:
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -68,14 +71,33 @@
 <body>
     <h1>Arbeitsstunden Rechner</h1>
     <form id="hoursForm">
-        <!-- Your input fields here -->
+        <label for="MoDo">Mo-Do:</label>
+        <input type="number" id="MoDo" name="MoDo" min="0" value="0"><br>
+        
+        <label for="Fr">Fr:</label>
+        <input type="number" id="Fr" name="Fr" min="0" value="0"><br>
+        
+        <label for="Sa">Sa:</label>
+        <input type="number" id="Sa" name="Sa" min="0" value="0"><br>
+        
+        <label for="So">So:</label>
+        <input type="number" id="So" name="So" min="0" value="0"><br>
+        
+        <label for="Feiertag">Feiertag:</label>
+        <input type="number" id="Feiertag" name="Feiertag" min="0" value="0"><br>
+        
         <input type="submit" value="Berechnen">
     </form>
     <div id="results">
-        <!-- Results will be displayed here -->
+        <!-- The calculated results will be displayed here -->
     </div>
     <div class="info">
-        Dieser Rechner geht davon aus, dass ihr Pausenzeiten im Dienst konsequ von 23:00 - 23:45 Uhr zu 16:00 - 16:45 Uhr umgepeppt habt.
+        Dieser Rechner geht davon aus, dass die Person ihre Pausenzeit geändert hat. Von 23:00 - 23:45 Uhr zu 16:00 - 16:45 Uhr.
     </div>
 </body>
 </html>
+```
+
+Make sure to have the `calculateHours.js` JavaScript file in the same directory as this HTML file. The JavaScript file should contain the logic for processing the form data and calculating the results, as discussed in previous messages.
+
+Once you have this HTML file and the corresponding JavaScript file in place, your calculator should work with a nice, modern look.
