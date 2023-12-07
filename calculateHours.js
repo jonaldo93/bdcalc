@@ -1,7 +1,4 @@
-Certainly! Let's merge the JavaScript code segments into a single script. This merged script will define the base rates, include functions to calculate regular hours and additional on-call bonuses, and handle the form submission to display results:
 
-### Merged JavaScript (`calculateHours.js`):
-```javascript
 // Define the base rates
 const rates = {
     MoDo: { BD: 11.75, Rate25: 5, Rate40: 4 },
