@@ -2,18 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Addition Tool</title>
-    <script src="script.js" defer></script>
+    <title>Work Hours Calculator</title>
+    <script src="calculateHours.js" defer></script>
 </head>
 <body>
-    <h1>Simple Addition Tool</h1>
-    <form id="additionForm">
-        <input type="number" id="number1" min="0" max="10" required> +
-        <input type="number" id="number2" min="0" max="10" required>
-        <button type="submit">Calculate</button>
+    <h1>Work Hours Calculator</h1>
+    <form id="hoursForm">
+        <label for="MoDo">Mo-Do:</label>
+        <input type="number" id="MoDo" name="MoDo" min="0" value="0">
+        <!-- Add inputs for Fr, Sa, So, Feiertag -->
+        <input type="submit" value="Calculate">
     </form>
-    <p>Sum: <span id="sum">0</span></p>
+    <div id="results">
+        <!-- Results will be displayed here -->
+    </div>
 </body>
 </html>
