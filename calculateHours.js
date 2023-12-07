@@ -53,23 +53,40 @@ function calculateHours(inputDays) {
 document.getElementById('hoursForm').addEventListener('submit', function(event) {
     event.preventDefault();
 
-    // Get the values from the form
-    const MoDo = parseInt(document.getElementById('MoDo').value, 10) || 0;
-    const Fr = parseInt(document.getElementById('Fr').value, 10) || 0;
-    const Sa = parseInt(document.getElementById('Sa').value, 10) || 0;
-    const So = parseInt(document.getElementById('So').value, 10) || 0;
-    const Feiertag = parseInt(document.getElementById('Feiertag').value, 10) || 0;
+    // ... (existing code to get input values and calculate hours)
 
-    // Calculate the hours for each category
-    const result = calculateHours({ MoDo, Fr, Sa, So, Feiertag });
-
-    // Display the results
+    // Generate table HTML with the results
     const resultsDiv = document.getElementById('results');
-    resultsDiv.innerHTML = `<p>BD: ${result.BD.toFixed(2)}</p>
-                            <p>Nacht 25%: ${result.Nacht25.toFixed(2)}</p>
-                            <p>Nacht 40%: ${result.Nacht40.toFixed(2)}</p>
-                            <p>Sonntag: ${result.Sonntag.toFixed(2)}</p>
-                            <p>Sonntag BD: ${result.SonntagBD.toFixed(2)}</p>
-                            <p>Feiertag aktiv 35%: ${result.FeiertagAktiv35.toFixed(2)}</p>
-                            <p>Feiertag 25%: ${result.Feiertag25.toFixed(2)}</p>`;
+    resultsDiv.innerHTML = `
+        <table style="width:100%; border-collapse: collapse;">
+            <tr style="background-color: #f2f2f2;">
+                <td>BD</td>
+                <td>${result.BD.toFixed(2)}</td>
+            </tr>
+            <tr>
+                <td>Nacht 25%</td>
+                <td>${result.Nacht25.toFixed(2)}</td>
+            </tr>
+            <tr style="background-color: #f2f2f2;">
+                <td>Nacht 40%</td>
+                <td>${result.Nacht40.toFixed(2)}</td>
+            </tr>
+            <tr>
+                <td>Sonntag</td>
+                <td>${result.Sonntag.toFixed(2)}</td>
+            </tr>
+            <tr style="background-color: #f2f2f2;">
+                <td>Sonntag BD</td>
+                <td>${result.SonntagBD.toFixed(2)}</td>
+            </tr>
+            <tr>
+                <td>Feiertag aktiv 35%</td>
+                <td>${result.FeiertagAktiv35.toFixed(2)}</td>
+            </tr>
+            <tr style="background-color: #f2f2f2;">
+                <td>Feiertag 25%</td>
+                <td>${result.Feiertag25.toFixed(2)}</td>
+            </tr>
+        </table>
+    `;
 });
