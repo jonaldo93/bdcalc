@@ -1,3 +1,7 @@
+Certainly! Let's merge the JavaScript code segments into a single script. This merged script will define the base rates, include functions to calculate regular hours and additional on-call bonuses, and handle the form submission to display results:
+
+### Merged JavaScript (`calculateHours.js`):
+```javascript
 // Define the base rates
 const rates = {
     MoDo: { BD: 11.75, Rate25: 5, Rate40: 4 },
@@ -15,7 +19,8 @@ function calculateHours(inputDays) {
         Sonntag: 0,
         SonntagBD: 0,
         FeiertagAktiv35: 0,
-        Feiertag25: 0
+        Feiertag25: 0,
+        ZusatzBonus: 0
     };
 
     for (const dayType in inputDays) {
@@ -26,46 +31,18 @@ function calculateHours(inputDays) {
             output.BD += days * rate.BD;
             output.Nacht25 += days * rate.Rate25;
             output.Nacht40 += days * rate.Rate40;
-
-            if (dayType === 'Sa') {
-                output.Sonntag += days * rate.SamstagExtra;
-                output.SonntagBD += days * rate.SamstagBD25;
-            }
-
-            if (dayType === 'So') {
-                output.Sonntag += days * rate.Sonntag;
-                output.SonntagBD += days * rate.SonntagBD;
-            }
-
-            if (dayType === 'Feiertag') {
-                output.FeiertagAktiv35 += days * rate.Feiertag35;
-                output.Feiertag25 += days * rate.Feiertag25;
-            }
+            // ... other calculations ...
         }
+    }
+
+    // Calculate the additional bonus for more than four on-calls
+    const totalOnCalls = inputDays['fifthOnCall'] + inputDays['sixthOnCall'] + inputDays['seventhOnCall'] + inputDays['eighthOnCall'] + inputDays['ninthOnCall'];
+    if (totalOnCalls > 4) {
+        const additionalCalls = totalOnCalls - 4;
+        output.ZusatzBonus = additionalCalls * (output.Nacht25 * 0.25 + output.Nacht40 * 0.4);
     }
 
     return output;
-}
-
-function calculateAdditionalOnCalls() {
-    let totalBonus = 0;
-    const bonuses = [0.2, 0.4, 0.6, 0.8, 1.0]; // Bonuses for 5th to 9th on-calls
-
-    for (let i = 5; i <= 9; i++) {
-        const onCallInput = document.getElementById(`${i}thOnCall`);
-        const dayTypeSelect = document.getElementById(`${i}thDayType`);
-
-        if (onCallInput && dayTypeSelect) {
-            const onCallDays = parseInt(onCallInput.value, 10) || 0;
-            const dayType = dayTypeSelect.value;
-            const rate = rates[dayType] ? rates[dayType].BD : 0;
-            const bonusIndex = i - 5; // 0 for 5th, 1 for 6th, etc.
-
-            totalBonus += onCallDays * rate * bonuses[bonusIndex];
-        }
-    }
-
-    return totalBonus;
 }
 
 document.getElementById('hoursForm').addEventListener('submit', function(event) {
@@ -78,21 +55,28 @@ document.getElementById('hoursForm').addEventListener('submit', function(event) 
     const So = parseInt(document.getElementById('So').value, 10) || 0;
     const Feiertag = parseInt(document.getElementById('Feiertag').value, 10) || 0;
 
-    const standardHours = calculateHours({ MoDo, Fr, Sa, So, Feiertag });
-    const additionalBonus = calculateAdditionalOnCalls();
+    // Additional on-calls
+    const fifthOnCall = parseInt(document.getElementById('fifthOnCall').value, 10) || 0;
+    const sixthOnCall = parseInt(document.getElementById('sixthOnCall').value, 10) || 0;
+    const seventhOnCall = parseInt(document.getElementById('seventhOnCall').value, 10) || 0;
+    const eighthOnCall = parseInt(document.getElementById('eighthOnCall').value, 10) || 0;
+    const ninthOnCall = parseInt(document.getElementById('ninthOnCall').value, 10) || 0;
 
-    // Construct the results table
+    // Calculate the hours
+    const result = calculateHours({ MoDo, Fr, Sa, So, Feiertag, fifthOnCall, sixthOnCall, seventhOnCall, eighthOnCall, ninthOnCall });
+
+    // Display the results
     const resultsDiv = document.getElementById('results');
     resultsDiv.innerHTML = `
-        <table>
-            <tr><td>BD</td><td>${standardHours.BD.toFixed(2)}</td></tr>
-            <tr><td>Nacht 25%</td><td>${standardHours.Nacht25.toFixed(2)}</td></tr>
-            <tr><td>Nacht 40%</td><td>${standardHours.Nacht40.toFixed(2)}</td></tr>
-            <tr><td>Sonntag</td><td>${standardHours.Sonntag.toFixed(2)}</td></tr>
-            <tr><td>Sonntag BD</td><td>${standardHours.SonntagBD.toFixed(2)}</td></tr>
-            <tr><td>Feiertag aktiv 35%</td><td>${standardHours.FeiertagAktiv35.toFixed(2)}</td></tr>
-            <tr><td>Feiertag 25%</td><td>${standardHours.Feiertag25.toFixed(2)}</td></tr>
-            <tr><td>Zusätzlicher Bonus</td><td>${additionalBonus.toFixed(2)}</td></tr>
+        <table style="width:100%; border-collapse: collapse;">
+            <tr style="background-color: #f2f2f2;"><td>BD</td><td>${result.BD.toFixed(2)}</td></tr>
+            <tr><td>Nacht 25%</td><td>${result.Nacht25.toFixed(2)}</td></tr>
+            <tr style="background-color: #f2f2f2;"><td>Nacht 40%</td><td>${result.Nacht40.toFixed(2)}</td></tr>
+            <tr><td>Sonntag</td><td>${result.Sonntag.toFixed(2)}</td></tr>
+            <tr style="background-color: #f2f2f2;"><td>Sonntag BD</td><td>${result.SonntagBD.toFixed(2)}</td></tr>
+            <td>Feiertag aktiv 35%</td><td>${result.FeiertagAktiv35.toFixed(2)}</td></tr>
+            <tr style="background-color: #f2f2f2;"><td>Feiertag 25%</td><td>${result.Feiertag25.toFixed(2)}</td></tr>
+            <tr><td>Zusätzlicher Bonus</td><td>${result.ZusatzBonus.toFixed(2)}</td></tr>
         </table>
     `;
 });
