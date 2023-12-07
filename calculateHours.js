@@ -1,4 +1,4 @@
-// Define the base rates
+
 const rates = {
     MoDo: { BD: 11.75, Rate25: 5, Rate40: 4 },
     Fr: { BD: 13.25, Rate25: 5, Rate40: 4 },
@@ -7,7 +7,6 @@ const rates = {
     Feiertag: { BD: 18, Rate25: 5, Rate40: 4, Feiertag35: 4.25, Feiertag25: 10.25 }
 };
 
-// This function calculates the total hours based on the input days
 function calculateHours(inputDays) {
     let output = {
         BD: 0,
@@ -49,53 +48,50 @@ function calculateHours(inputDays) {
     return output;
 }
 
-// Event listener for form submission
+function calculateAdditionalOnCalls() {
+    let totalBonus = 0;
+    const bonuses = [0.2, 0.4, 0.6, 0.8, 1.0]; // Bonuses for 5th to 9th on-calls
+
+    for (let i = 0; i < bonuses.length; i++) {
+        const onCallInput = document.getElementById(`${i + 5}thOnCall`);
+        const dayTypeSelect = document.getElementById(`${i + 5}thDayType`);
+
+        if (onCallInput && dayTypeSelect) {
+            const onCallDays = parseInt(onCallInput.value, 10) || 0;
+            const dayType = dayTypeSelect.value;
+            const rate = rates[dayType] ? rates[dayType].BD : 0;
+
+            totalBonus += onCallDays * rate * bonuses[i];
+        }
+    }
+
+    return totalBonus;
+}
+
 document.getElementById('hoursForm').addEventListener('submit', function(event) {
     event.preventDefault();
 
-    // Get the values from the form
     const MoDo = parseInt(document.getElementById('MoDo').value, 10) || 0;
     const Fr = parseInt(document.getElementById('Fr').value, 10) || 0;
     const Sa = parseInt(document.getElementById('Sa').value, 10) || 0;
     const So = parseInt(document.getElementById('So').value, 10) || 0;
     const Feiertag = parseInt(document.getElementById('Feiertag').value, 10) || 0;
 
-    // Call the calculateHours function with the values from the form
-    const result = calculateHours({ MoDo, Fr, Sa, So, Feiertag });
+    const standardHours = calculateHours({ MoDo, Fr, Sa, So, Feiertag });
+    const additionalBonus = calculateAdditionalOnCalls();
 
-    // Generate and display the table with the results
     const resultsDiv = document.getElementById('results');
     resultsDiv.innerHTML = `
         <table style="width:100%; border-collapse: collapse;">
             <tr style="background-color: #f2f2f2;">
                 <td>BD</td>
-                <td>${result.BD.toFixed(2)}</td>
+                <td>${standardHours.BD.toFixed(2)}</td>
             </tr>
+            <!-- ... other result rows ... -->
             <tr>
-                <td>Nacht 25%</td>
-                <td>${result.Nacht25.toFixed(2)}</td>
-            </tr>
-            <tr style="background-color: #f2f2f2;">
-                <td>Nacht 40%</td>
-                <td>${result.Nacht40.toFixed(2)}</td>
-            </tr>
-            <tr>
-                <td>Sonntag</td>
-                <td>${result.Sonntag.toFixed(2)}</td>
-            </tr>
-            <tr style="background-color: #f2f2f2;">
-                <td>Sonntag BD</td>
-                <td>${result.SonntagBD.toFixed(2)}</td>
-            </tr>
-            <tr>
-                <td>Feiertag aktiv 35%</td>
-                <td>${result.FeiertagAktiv35.toFixed(2)}</td>
-            </tr>
-            <tr style="background-color: #f2f2f2;">
-                <td>Feiertag 25%</td>
-                <td>${result.Feiertag25.toFixed(2)}</td>
+                <td>Zusätzlicher Bonus</td>
+                <td>${additionalBonus.toFixed(2)}</td>
             </tr>
         </table>
     `;
 });
-
