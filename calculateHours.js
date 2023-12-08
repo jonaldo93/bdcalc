@@ -65,6 +65,30 @@ function calculateHours(inputDays) {
         }
     });
 
+    // Check for short notice work
+    const shortNoticeAnswer = document.getElementById('shortNoticeYesNo').value;
+    if (shortNoticeAnswer === 'Ja') {
+        const shortNoticeDuration = document.getElementById('shortNoticeDuration').value;
+        const shortNoticeDay = document.getElementById('shortNoticeDay').value;
+    
+        let multiplier = 0;
+        switch (shortNoticeDuration) {
+            case 'FlexGreater96':
+                multiplier = 0.05;
+                break;
+            case 'Flex48To96':
+                multiplier = 0.15;
+                break;
+            case 'FlexLess48':
+                multiplier = 0.30;
+                break;
+        }
+    
+        const dayHours = rates[shortNoticeDay] ? rates[shortNoticeDay].BD : 0;
+        output.ShortNoticeBonus = dayHours * multiplier;
+    }
+    
+
     return output;
 }
 
@@ -125,3 +149,12 @@ document.getElementById('resetButton').addEventListener('click', function(event)
     // Prevent form submission
     event.preventDefault();
 });
+
+document.getElementById('shortNoticeYesNo').addEventListener('change', function() {
+    if (this.value === 'Ja') {
+        document.getElementById('shortNoticeDetails').style.display = 'block';
+    } else {
+        document.getElementById('shortNoticeDetails').style.display = 'none';
+    }
+});
+
