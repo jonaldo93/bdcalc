@@ -201,12 +201,16 @@ document.getElementById('hoursForm').addEventListener('submit', function(event) 
     console.log(document.getElementById('shortNoticeDay'));
     
     // Include additional on-call days in the input
+    // Include additional on-call days in the input
     const additionalOnCalls = {};
     for (let i = 1; i <= 5; i++) {
-        additionalOnCalls[`additionalOnCall${i}`] = document.getElementById(`additionalOnCall${i}`).value;
+        const onCallElement = document.getElementById(`additionalOnCallSelect${i}`);
+        if (onCallElement) {
+            additionalOnCalls[`additionalOnCallSelect${i}`] = onCallElement.value;
+        } else {
+            console.log(`Element additionalOnCallSelect${i} not found`);
+        }
     }
-
-
     // ... existing code for getting input values ...
 
     const result = calculateHours({ MoDo, Fr, Sa, So, Feiertag, ...additionalOnCalls });
