@@ -147,19 +147,28 @@ function calculateHours(inputDays) {
 // Event listener for form submission
 document.getElementById('hoursForm').addEventListener('submit', function(event) {
     event.preventDefault();
-
+    // Log and check each element before accessing its value
+    console.log('MoDo Element:', document.getElementById('MoDo'));
     const MoDo = parseInt(document.getElementById('MoDo').value, 10) || 0;
+
+    console.log('Fr Element:', document.getElementById('Fr'));
     const Fr = parseInt(document.getElementById('Fr').value, 10) || 0;
+
+    console.log('Sa Element:', document.getElementById('Sa'));
     const Sa = parseInt(document.getElementById('Sa').value, 10) || 0;
+
+    console.log('So Element:', document.getElementById('So'));
     const So = parseInt(document.getElementById('So').value, 10) || 0;
+
+    console.log('Feiertag Element:', document.getElementById('Feiertag'));
     const Feiertag = parseInt(document.getElementById('Feiertag').value, 10) || 0;
 
     // Include additional on-call days in the input   
     const additionalOnCalls = {};
     for (let i = 1; i <= 5; i++) {
+        console.log(`additionalOnCallSelect${i} Element:`, document.getElementById(`additionalOnCallSelect${i}`));
         additionalOnCalls[`additionalOnCallSelect${i}`] = document.getElementById(`additionalOnCallSelect${i}`).value;
     }
-
     const result = calculateHours({ MoDo, Fr, Sa, So, Feiertag, ...additionalOnCalls });
 
     let resultsHTML = `<table style="width:100%; border-collapse: collapse;">...`;
