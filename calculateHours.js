@@ -118,11 +118,16 @@ function calculateHours(inputDays) {
     });
     
     // Check for short notice work
+    console.log('shortNoticeYesNo Element:', document.getElementById('shortNoticeYesNo'));
     const shortNoticeAnswer = document.getElementById('shortNoticeYesNo').value;
-    if (shortNoticeAnswer === 'Ja') {
-        const shortNoticeDuration = document.getElementById('shortNoticeDuration').value;
-        const shortNoticeDay = document.getElementById('shortNoticeDay').value;
     
+    if (shortNoticeAnswer === 'Ja') {
+        console.log('shortNoticeDuration Element:', document.getElementById('shortNoticeDuration'));
+        const shortNoticeDuration = document.getElementById('shortNoticeDuration').value;
+    
+        console.log('shortNoticeDay Element:', document.getElementById('shortNoticeDay'));
+        const shortNoticeDay = document.getElementById('shortNoticeDay').value;
+       
         let multiplier = 0;
         switch (shortNoticeDuration) {
             case 'FlexGreater96':
