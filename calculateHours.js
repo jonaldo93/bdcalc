@@ -31,8 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-
-
+// Event listener for reset button
 document.getElementById('resetButton').addEventListener('click', function(event) {
     // Reset standard day inputs
     document.getElementById('MoDo').value = 0;
@@ -41,15 +40,15 @@ document.getElementById('resetButton').addEventListener('click', function(event)
     document.getElementById('So').value = 0;
     document.getElementById('Feiertag').value = 0;
 
-    // Reset additional on-call fields
+    // Reset additional on-call fields and hide their containers
     for (let i = 1; i <= 5; i++) {
-        document.getElementById(`additionalOnCall${i}`).selectedIndex = 0;
+        document.getElementById(`additionalOnCallSelect${i}`).selectedIndex = 0;
+        document.getElementById(`additionalOnCall${i}Container`).style.display = 'none';
     }
 
     // Clear the results div
     document.getElementById('results').innerHTML = '';
 
-    // Prevent form submission
     event.preventDefault();
 });
 
