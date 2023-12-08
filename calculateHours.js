@@ -5,12 +5,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Hide all additional on-call fields initially
         for (let i = 1; i <= 5; i++) {
-            document.getElementById(`additionalOnCall${i}`).style.display = 'none';
+            document.getElementById(`additionalOnCall${i}Container`).style.display = 'none';
         }
 
         // Show the required number of additional on-call fields
         for (let i = 1; i <= totalBDs - 4; i++) {
-            document.getElementById(`additionalOnCall${i}`).style.display = 'block';
+            document.getElementById(`additionalOnCall${i}Container`).style.display = 'block';
         }
     }
 
