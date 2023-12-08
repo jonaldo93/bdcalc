@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BD CALC1</title>
+    <title>BD CALC2</title>
     <script src="calculateHours.js" defer></script>
     <style>
         body {
@@ -82,7 +82,6 @@
             <option value="7">7</option>
             <option value="8">8</option>
             <option value="9">9</option>
-            <option value="10">10</option>
         </select><br>
         <label for="MoDo">Mo-Do:</label>
         <input type="number" id="MoDo" name="MoDo" min="0" value="0"><br>
@@ -100,37 +99,67 @@
         <input type="number" id="Feiertag" name="Feiertag" min="0" value="0"><br>
 
         <!-- Additional on-call fields, initially hidden -->
-        <!-- Individual Additional on-call fields, initially hidden -->
+        <!-- Additional on-call fields, initially hidden -->
         <div id="additionalOnCall1Container" style="display: none;">
             <label for="additionalOnCallSelect1">Fünfter Bereitschaftsdienst:</label>
             <select id="additionalOnCallSelect1">
-                <!-- options -->
+                <option value="">Nicht erfolgt</option>
+                <option value="MoDo">Montag-Donnerstag</option>
+                <option value="Fr">Freitag</option>
+                <option value="Sa">Samstag</option>
+                <option value="So">Sonntag</option>
+                <option value="Feiertag">Feiertag</option>
             </select><br>
         </div>
+        
         <div id="additionalOnCall2Container" style="display: none;">
             <label for="additionalOnCallSelect2">Sechster Bereitschaftsdienst:</label>
             <select id="additionalOnCallSelect2">
-                <!-- options -->
+                <option value="">Nicht erfolgt</option>
+                <option value="MoDo">Montag-Donnerstag</option>
+                <option value="Fr">Freitag</option>
+                <option value="Sa">Samstag</option>
+                <option value="So">Sonntag</option>
+                <option value="Feiertag">Feiertag</option>
             </select><br>
         </div>
+        
         <div id="additionalOnCall3Container" style="display: none;">
             <label for="additionalOnCallSelect3">Siebter Bereitschaftsdienst:</label>
             <select id="additionalOnCallSelect3">
-                <!-- options -->
+                <option value="">Nicht erfolgt</option>
+                <option value="MoDo">Montag-Donnerstag</option>
+                <option value="Fr">Freitag</option>
+                <option value="Sa">Samstag</option>
+                <option value="So">Sonntag</option>
+                <option value="Feiertag">Feiertag</option>
             </select><br>
         </div>
+        
         <div id="additionalOnCall4Container" style="display: none;">
             <label for="additionalOnCallSelect4">Achter Bereitschaftsdienst:</label>
             <select id="additionalOnCallSelect4">
-                <!-- options -->
+                <option value="">Nicht erfolgt</option>
+                <option value="MoDo">Montag-Donnerstag</option>
+                <option value="Fr">Freitag</option>
+                <option value="Sa">Samstag</option>
+                <option value="So">Sonntag</option>
+                <option value="Feiertag">Feiertag</option>
             </select><br>
         </div>
+        
         <div id="additionalOnCall5Container" style="display: none;">
             <label for="additionalOnCallSelect5">Neunter Bereitschaftsdienst:</label>
             <select id="additionalOnCallSelect5">
-                <!-- options -->
+                <option value="">Nicht erfolgt</option>
+                <option value="MoDo">Montag-Donnerstag</option>
+                <option value="Fr">Freitag</option>
+                <option value="Sa">Samstag</option>
+                <option value="So">Sonntag</option>
+                <option value="Feiertag">Feiertag</option>
             </select><br>
         </div>
+
       
         <!-- Short Notice Work Question -->
         <label for="shortNoticeYesNo">Kurzfristig eingesprungen?</label>
