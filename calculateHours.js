@@ -199,8 +199,8 @@ document.getElementById('hoursForm').addEventListener('submit', function(event) 
             <tr><td>Sonntag</td><td>${result.Sonntag.toFixed(2)}</td></tr>
             <tr style="background-color: #f2f2f2;"><td>Sonntag BD</td><td>${result.SonntagBD.toFixed(2)}</td></tr>
             <tr><td>Feiertag aktiv 35%</td><td>${result.FeiertagAktiv35.toFixed(2)}</td></tr>
-            <tr style="background-color: #f2f2f2;"><td>Feiertag 25%</td><td>${result.Feiertag25.toFixed(2)}</td></tr>
-            </table>`;
+            <tr style="background-color: #f2f2f2;"><td>Feiertag 25%</td><td>${result.Feiertag25.toFixed(2)}</td></tr>`;
+
     // Add additional on-call bonuses to the results
     result.AdditionalOnCallBonuses.forEach(bonus => {
         resultsHTML += `<tr><td>${bonus.bonusType}</td><td>${bonus.value.toFixed(2)}</td></tr>`;
@@ -214,5 +214,6 @@ document.getElementById('hoursForm').addEventListener('submit', function(event) 
     resultsHTML += `</table>`;
     document.getElementById('results').innerHTML = resultsHTML;
 });
+
 
 
