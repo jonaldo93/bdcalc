@@ -105,3 +105,23 @@ document.getElementById('hoursForm').addEventListener('submit', function(event) 
     resultsHTML += `</table>`;
     document.getElementById('results').innerHTML = resultsHTML;
 });
+
+document.getElementById('resetButton').addEventListener('click', function(event) {
+    // Reset standard day inputs
+    document.getElementById('MoDo').value = 0;
+    document.getElementById('Fr').value = 0;
+    document.getElementById('Sa').value = 0;
+    document.getElementById('So').value = 0;
+    document.getElementById('Feiertag').value = 0;
+
+    // Reset additional on-call fields
+    for (let i = 1; i <= 5; i++) {
+        document.getElementById(`additionalOnCall${i}`).selectedIndex = 0;
+    }
+
+    // Clear the results div
+    document.getElementById('results').innerHTML = '';
+
+    // Prevent form submission
+    event.preventDefault();
+});
