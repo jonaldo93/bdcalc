@@ -174,6 +174,11 @@ document.getElementById('hoursForm').addEventListener('submit', function(event) 
 document.getElementById('hoursForm').addEventListener('submit', function(event) {
     event.preventDefault();
 
+    // Log the elements to check if they are correctly selected
+    console.log(document.getElementById('MoDo'));
+    console.log(document.getElementById('additionalOnCallSelect1'));
+    // Add similar console logs for other elements
+    
     const MoDo = parseInt(document.getElementById('MoDo').value, 10) || 0;
     const Fr = parseInt(document.getElementById('Fr').value, 10) || 0;
     const Sa = parseInt(document.getElementById('Sa').value, 10) || 0;
