@@ -140,9 +140,29 @@ document.getElementById('hoursForm').addEventListener('submit', function(event) 
         additionalOnCalls[`additionalOnCall${i}`] = document.getElementById(`additionalOnCall${i}`).value;
     }
 
-    // Event listener for form submission
+    const result = calculateHours({ MoDo, Fr, Sa, So, Feiertag, ...additionalOnCalls });
+
+    let resultsHTML = `<table style="width:100%; border-collapse: collapse;">...`;
+
+    document.getElementById('results').innerHTML = resultsHTML;
+});
+
+// Event listener for form submission
 document.getElementById('hoursForm').addEventListener('submit', function(event) {
     event.preventDefault();
+
+    const MoDo = parseInt(document.getElementById('MoDo').value, 10) || 0;
+    const Fr = parseInt(document.getElementById('Fr').value, 10) || 0;
+    const Sa = parseInt(document.getElementById('Sa').value, 10) || 0;
+    const So = parseInt(document.getElementById('So').value, 10) || 0;
+    const Feiertag = parseInt(document.getElementById('Feiertag').value, 10) || 0;
+
+    // Include additional on-call days in the input
+    const additionalOnCalls = {};
+    for (let i = 1; i <= 5; i++) {
+        additionalOnCalls[`additionalOnCall${i}`] = document.getElementById(`additionalOnCall${i}`).value;
+    }
+
 
     // ... existing code for getting input values ...
 
