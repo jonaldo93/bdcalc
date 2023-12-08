@@ -53,11 +53,11 @@ document.getElementById('hoursForm').addEventListener('submit', function(event) 
     const Feiertag = parseInt(document.getElementById('Feiertag').value, 10) || 0;
 
     // Additional on-calls
-    const fifthOnCall = parseInt(document.getElementById('fifthOnCall').value, 10) || 0;
-    const sixthOnCall = parseInt(document.getElementById('sixthOnCall').value, 10) || 0;
-    const seventhOnCall = parseInt(document.getElementById('seventhOnCall').value, 10) || 0;
-    const eighthOnCall = parseInt(document.getElementById('eighthOnCall').value, 10) || 0;
-    const ninthOnCall = parseInt(document.getElementById('ninthOnCall').value, 10) || 0;
+    const fifthOnCall = document.getElementById('fifthOnCall').value;
+    const sixthOnCall = document.getElementById('sixthOnCall').value;
+    const seventhOnCall = document.getElementById('seventhOnCall').value;
+    const eighthOnCall = document.getElementById('eighthOnCall').value;
+    const ninthOnCall = document.getElementById('ninthOnCall').value;
 
     // Calculate the hours
     const result = calculateHours({ MoDo, Fr, Sa, So, Feiertag, fifthOnCall, sixthOnCall, seventhOnCall, eighthOnCall, ninthOnCall });
