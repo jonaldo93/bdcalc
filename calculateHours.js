@@ -72,7 +72,6 @@ function calculateHours(inputDays) {
         SonntagBD: 0,
         FeiertagAktiv35: 0,
         Feiertag25: 0,
-        // Adding additional on-call bonuses
         AdditionalOnCallBonuses: []
     };
 
@@ -101,25 +100,23 @@ function calculateHours(inputDays) {
             }
         }
     }
-
     // Calculate additional on-call bonuses
     const additionalOnCallFactors = [0.2, 0.4, 0.6, 0.8, 1.0];
     additionalOnCallFactors.forEach((factor, index) => {
-        const onCallDay = inputDays[`additionalOnCall${index + 1}`];
+        const onCallDay = inputDays[`additionalOnCallSelect${index + 1}`];
         if (onCallDay && rates[onCallDay]) {
             output.AdditionalOnCallBonuses.push({
                 bonusType: `BD+${index + 1}`,
                 value: rates[onCallDay].BD * factor
             });
         } else {
-            // Handle "Nicht erfolgt" case
             output.AdditionalOnCallBonuses.push({
                 bonusType: `BD+${index + 1}`,
                 value: 0
             });
         }
     });
-
+    
     // Check for short notice work
     const shortNoticeAnswer = document.getElementById('shortNoticeYesNo').value;
     if (shortNoticeAnswer === 'Ja') {
