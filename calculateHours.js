@@ -182,6 +182,9 @@ document.getElementById('hoursForm').addEventListener('submit', function(event) 
     const So = parseInt(document.getElementById('So').value, 10) || 0;
     const Feiertag = parseInt(document.getElementById('Feiertag').value, 10) || 0;
 
+
+    console.log(document.getElementById('shortNoticeDay'));
+    
     // Include additional on-call days in the input
     const additionalOnCalls = {};
     for (let i = 1; i <= 5; i++) {
