@@ -141,8 +141,35 @@
                     <option value="Feiertag">Feiertag</option>
                 </select><br>
             </div>
+        <!-- Short Notice Work Question -->
+        <label for="shortNoticeYesNo">Kurzfristig eingesprungen?</label>
+        <select id="shortNoticeYesNo">
+            <option value="Nein">Nein</option>
+            <option value="Ja">Ja</option>
+        </select><br>
+        
+        <!-- Hidden sections that appear based on the above answer -->
+        <div id="shortNoticeDetails" style="display: none;">
+            <!-- How Short Notice -->
+            <label for="shortNoticeDuration">Wie kurzfristig?</label>
+            <select id="shortNoticeDuration">
+                <option value="FlexGreater96">>96h vorher</option>
+                <option value="Flex48To96">48-96h vorher</option>
+                <option value="FlexLess48"><48h vorher</option>
+            </select><br>
+        
+            <!-- Which Day -->
+            <label for="shortNoticeDay">An welchem Tag?</label>
+            <select id="shortNoticeDay">
+                <option value="MoDo">Montag-Donnerstag</option>
+                <option value="Fr">Freitag</option>
+                <option value="Sa">Samstag</option>
+                <option value="So">Sonntag</option>
+                <option value="Feiertag">Feiertag</option>
+            </select><br>
         </div>
-
+     
+        </div>
         <input type="submit" value="Berechnen">
         <input type="reset" value="Zurücksetzen" id="resetButton">
     </form>
