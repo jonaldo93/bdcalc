@@ -17,14 +17,20 @@ function calculateHours(inputDays) {
         SonntagBD: 0,
         FeiertagAktiv35: 0,
         Feiertag25: 0,
-        ZusatzBonus: 0
+        ZusatzBonus: 0,
+        // Additional output lines for on-call bonuses
+        BDPlus1: 0,
+        BDPlus2: 0,
+        BDPlus3: 0,
+        BDPlus4: 0,
+        BDPlus5: 0
     };
 
     for (const dayType in inputDays) {
         const days = inputDays[dayType];
         const rate = rates[dayType];
 
-        if (rate) {
+        if (rate && dayType !== 'fifthOnCall' && dayType !== 'sixthOnCall' && dayType !== 'seventhOnCall' && dayType !== 'eighthOnCall' && dayType !== 'ninthOnCall') {
             output.BD += days * rate.BD;
             output.Nacht25 += days * rate.Rate25;
             output.Nacht40 += days * rate.Rate40;
@@ -32,12 +38,22 @@ function calculateHours(inputDays) {
         }
     }
 
-    // Calculate the additional bonus for more than four on-calls
-    const totalOnCalls = inputDays['fifthOnCall'] + inputDays['sixthOnCall'] + inputDays['seventhOnCall'] + inputDays['eighthOnCall'] + inputDays['ninthOnCall'];
-    if (totalOnCalls > 4) {
-        const additionalCalls = totalOnCalls - 4;
-        output.ZusatzBonus = additionalCalls * (output.Nacht25 * 0.25 + output.Nacht40 * 0.4);
-    }
+    // Calculate the additional on-call bonuses
+    const onCallBonuses = [
+        { id: 'fifthOnCall', factor: 0.2 },
+        { id: 'sixthOnCall', factor: 0.4 },
+        { id: 'seventhOnCall', factor: 0.6 },
+        { id: 'eighthOnCall', factor: 0.8 },
+        { id: 'ninthOnCall', factor: 1.0 }
+    ];
+
+    onCallBonuses.forEach((bonus, index) => {
+        const dayType = inputDays[bonus.id];
+        if (dayType && rates[dayType]) {
+            const bonusHours = rates[dayType].BD * bonus.factor;
+            output[`BDPlus${index + 1}`] = bonusHours;
+        }
+    });
 
     return output;
 }
