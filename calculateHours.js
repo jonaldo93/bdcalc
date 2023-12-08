@@ -137,6 +137,12 @@ document.getElementById('hoursForm').addEventListener('submit', function(event) 
         additionalOnCalls[`additionalOnCall${i}`] = document.getElementById(`additionalOnCall${i}`).value;
     }
 
+    // Event listener for form submission
+document.getElementById('hoursForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    // ... existing code for getting input values ...
+
     const result = calculateHours({ MoDo, Fr, Sa, So, Feiertag, ...additionalOnCalls });
 
     let resultsHTML = `
@@ -148,14 +154,20 @@ document.getElementById('hoursForm').addEventListener('submit', function(event) 
             <tr style="background-color: #f2f2f2;"><td>Sonntag BD</td><td>${result.SonntagBD.toFixed(2)}</td></tr>
             <tr><td>Feiertag aktiv 35%</td><td>${result.FeiertagAktiv35.toFixed(2)}</td></tr>
             <tr style="background-color: #f2f2f2;"><td>Feiertag 25%</td><td>${result.Feiertag25.toFixed(2)}</td></tr>
-        `;
+            `;
 
     // Add additional on-call bonuses to the results
     result.AdditionalOnCallBonuses.forEach(bonus => {
         resultsHTML += `<tr><td>${bonus.bonusType}</td><td>${bonus.value.toFixed(2)}</td></tr>`;
     });
 
+    // Add short notice bonus to the results
+    if (result.ShortNoticeBonus !== undefined) {
+        resultsHTML += `<tr><td>Kurzfristig Bonus</td><td>${result.ShortNoticeBonus.toFixed(2)}</td></tr>`;
+    }
+
     resultsHTML += `</table>`;
     document.getElementById('results').innerHTML = resultsHTML;
 });
+
 
