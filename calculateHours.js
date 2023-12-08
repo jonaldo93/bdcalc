@@ -1,10 +1,13 @@
-document.getElementById('shortNoticeYesNo').addEventListener('change', function() {
-    if (this.value === 'Ja') {
-        document.getElementById('shortNoticeDetails').style.display = 'block';
-    } else {
-        document.getElementById('shortNoticeDetails').style.display = 'none';
-    }
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('shortNoticeYesNo').addEventListener('change', function() {
+        if (this.value === 'Ja') {
+            document.getElementById('shortNoticeDetails').style.display = 'block';
+        } else {
+            document.getElementById('shortNoticeDetails').style.display = 'none';
+        }
+    });
 });
+
 
 document.getElementById('resetButton').addEventListener('click', function(event) {
     // Reset standard day inputs
