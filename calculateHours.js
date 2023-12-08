@@ -157,10 +157,10 @@ document.getElementById('hoursForm').addEventListener('submit', function(event) 
     const So = parseInt(document.getElementById('So').value, 10) || 0;
     const Feiertag = parseInt(document.getElementById('Feiertag').value, 10) || 0;
 
-    // Include additional on-call days in the input
+    // Include additional on-call days in the input   
     const additionalOnCalls = {};
     for (let i = 1; i <= 5; i++) {
-        additionalOnCalls[`additionalOnCall${i}`] = document.getElementById(`additionalOnCall${i}`).value;
+        additionalOnCalls[`additionalOnCallSelect${i}`] = document.getElementById(`additionalOnCallSelect${i}`).value;
     }
 
     const result = calculateHours({ MoDo, Fr, Sa, So, Feiertag, ...additionalOnCalls });
