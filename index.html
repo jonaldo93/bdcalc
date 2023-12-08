@@ -71,6 +71,19 @@
 <body>
     <h1>BD CALC </h1>
     <form id="hoursForm">
+        <label for="totalBDs">Anzahl der Dienste insgesamt im Monat:</label>
+        <select id="totalBDs">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+        </select><br>
         <label for="MoDo">Mo-Do:</label>
         <input type="number" id="MoDo" name="MoDo" min="0" value="0"><br>
         
@@ -86,8 +99,11 @@
         <label for="Feiertag">Feiertag:</label>
         <input type="number" id="Feiertag" name="Feiertag" min="0" value="0"><br>
 
-        <!-- Additional on-call fields -->
-        <div id="additionalOnCalls">
+        <!-- Additional on-call fields, initially hidden -->
+        <!-- Individual Additional on-call fields, initially hidden -->
+        <div id="additionalOnCall1" style="display: none;">
+            <!-- Fünfter Bereitschaftsdienst -->
+            <!-- ... select field for Fünfter Bereitschaftsdienst ... -->
             <div>
                 <label for="additionalOnCall1">Fünfter Bereitschaftsdienst:</label>
                 <select id="additionalOnCall1">
@@ -99,6 +115,10 @@
                     <option value="Feiertag">Feiertag</option>
                 </select><br>
             </div>
+        </div>
+        <div id="additionalOnCall2" style="display: none;">
+            <!-- Sechster Bereitschaftsdienst -->
+            <!-- ... select field for Sechster Bereitschaftsdienst ... -->
             <div>
                 <label for="additionalOnCall2">Sechster Bereitschaftsdienst:</label>
                 <select id="additionalOnCall2">
@@ -110,6 +130,10 @@
                     <option value="Feiertag">Feiertag</option>
                 </select><br>
             </div>
+        </div>
+        <div id="additionalOnCall3" style="display: none;">
+            <!-- Siebter Bereitschaftsdienst -->
+            <!-- ... select field for Siebter Bereitschaftsdienst ... -->
             <div>
                 <label for="additionalOnCall3">Siebter Bereitschaftsdienst:</label>
                 <select id="additionalOnCall3">
@@ -121,6 +145,10 @@
                     <option value="Feiertag">Feiertag</option>
                 </select><br>
             </div>
+        </div>
+        <div id="additionalOnCall4" style="display: none;">
+            <!-- Achter Bereitschaftsdienst -->
+            <!-- ... select field for Achter Bereitschaftsdienst ... -->
             <div>
                 <label for="additionalOnCall4">Achter Bereitschaftsdienst:</label>
                 <select id="additionalOnCall4">
@@ -132,7 +160,11 @@
                     <option value="Feiertag">Feiertag</option>
                 </select><br>
             </div>
-            <div>
+        </div>
+        <div id="additionalOnCall5" style="display: none;">
+            <!-- Neunter Bereitschaftsdienst -->
+            <!-- ... select field for Neunter Bereitschaftsdienst ... -->
+             <div>
                 <label for="additionalOnCall5">Neunter Bereitschaftsdienst:</label>
                 <select id="additionalOnCall5">
                     <option value="">Nicht erfolgt</option>
@@ -143,6 +175,9 @@
                     <option value="Feiertag">Feiertag</option>
                 </select><br>
             </div>
+        </div>
+
+        
         <!-- Short Notice Work Question -->
         <label for="shortNoticeYesNo">Kurzfristig eingesprungen?</label>
         <select id="shortNoticeYesNo">
