@@ -1,18 +1,18 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Event listener for showing/hiding additional on-call fields
     document.getElementById('totalBDs').addEventListener('change', function() {
         var totalBDs = parseInt(this.value);
 
         // Hide all additional on-call fields initially
         for (let i = 1; i <= 5; i++) {
-            document.getElementById(`additionalOnCall${i}`).style.display = 'none';
+            document.getElementById(`additionalOnCall${i}Container`).style.display = 'none';
         }
 
         // Show the required number of additional on-call fields
         for (let i = 1; i <= totalBDs - 4; i++) {
-            document.getElementById(`additionalOnCall${i}`).style.display = 'block';
+            document.getElementById(`additionalOnCall${i}Container`).style.display = 'block';
         }
     });
+
     document.getElementById('shortNoticeYesNo').addEventListener('change', function() {
         if (this.value === 'Ja') {
             document.getElementById('shortNoticeDetails').style.display = 'block';
@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
 
 
 
