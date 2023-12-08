@@ -174,6 +174,7 @@ document.getElementById('hoursForm').addEventListener('submit', function(event) 
         console.log(`additionalOnCallSelect${i} Element:`, document.getElementById(`additionalOnCallSelect${i}`));
         additionalOnCalls[`additionalOnCallSelect${i}`] = document.getElementById(`additionalOnCallSelect${i}`).value;
     }
+
     const result = calculateHours({ MoDo, Fr, Sa, So, Feiertag, ...additionalOnCalls });
 
     let resultsHTML = `<table style="width:100%; border-collapse: collapse;">...`;
