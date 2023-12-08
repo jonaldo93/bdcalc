@@ -56,6 +56,12 @@ function calculateHours(inputDays) {
                 bonusType: `BD+${index + 1}`,
                 value: rates[onCallDay].BD * factor
             });
+        } else {
+            // Handle "Nicht erfolgt" case
+            output.AdditionalOnCallBonuses.push({
+                bonusType: `BD+${index + 1}`,
+                value: 0
+            });
         }
     });
 
