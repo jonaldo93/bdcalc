@@ -1,18 +1,26 @@
 document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('totalBDs').addEventListener('change', function() {
-        var totalBDs = parseInt(this.value);
+    // Function to update the visibility of additional on-call fields
+    function updateAdditionalOnCallsVisibility() {
+        var totalBDs = parseInt(document.getElementById('totalBDs').value);
 
         // Hide all additional on-call fields initially
         for (let i = 1; i <= 5; i++) {
-            document.getElementById(`additionalOnCall${i}Container`).style.display = 'none';
+            document.getElementById(`additionalOnCall${i}`).style.display = 'none';
         }
 
         // Show the required number of additional on-call fields
         for (let i = 1; i <= totalBDs - 4; i++) {
-            document.getElementById(`additionalOnCall${i}Container`).style.display = 'block';
+            document.getElementById(`additionalOnCall${i}`).style.display = 'block';
         }
-    });
+    }
 
+    // Event listener for totalBDs change
+    document.getElementById('totalBDs').addEventListener('change', updateAdditionalOnCallsVisibility);
+
+    // Call the function on page load to set the initial state
+    updateAdditionalOnCallsVisibility();
+
+    // Event listener for short notice work
     document.getElementById('shortNoticeYesNo').addEventListener('change', function() {
         if (this.value === 'Ja') {
             document.getElementById('shortNoticeDetails').style.display = 'block';
