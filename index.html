@@ -86,10 +86,11 @@
         <input type="number" id="Feiertag" name="Feiertag" min="0" value="0"><br>
 
        <!-- Additional on-call fields -->
+<!-- Additional on-call fields -->
 <div id="additionalOnCalls">
     <div>
         <label for="fifthOnCall">Fünfter Bereitschaftsdienst:</label>
-        <select id="fifthDayType">
+        <select id="fifthOnCall">
             <option value="MoDo">Montag-Donnerstag</option>
             <option value="Fr">Freitag</option>
             <option value="Sa">Samstag</option>
@@ -99,7 +100,7 @@
     </div>
     <div>
         <label for="sixthOnCall">Sechster Bereitschaftsdienst:</label>
-        <select id="sixthDayType">
+        <select id="sixthOnCall">
             <option value="MoDo">Montag-Donnerstag</option>
             <option value="Fr">Freitag</option>
             <option value="Sa">Samstag</option>
@@ -109,7 +110,7 @@
     </div>
     <div>
         <label for="seventhOnCall">Siebter Bereitschaftsdienst:</label>
-        <select id="seventhDayType">
+        <select id="seventhOnCall">
             <option value="MoDo">Montag-Donnerstag</option>
             <option value="Fr">Freitag</option>
             <option value="Sa">Samstag</option>
@@ -119,7 +120,7 @@
     </div>
     <div>
         <label for="eighthOnCall">Achter Bereitschaftsdienst:</label>
-        <select id="eighthDayType">
+        <select id="eighthOnCall">
             <option value="MoDo">Montag-Donnerstag</option>
             <option value="Fr">Freitag</option>
             <option value="Sa">Samstag</option>
@@ -129,7 +130,7 @@
     </div>
     <div>
         <label for="ninthOnCall">Neunter Bereitschaftsdienst:</label>
-        <select id="ninthDayType">
+        <select id="ninthOnCall">
             <option value="MoDo">Montag-Donnerstag</option>
             <option value="Fr">Freitag</option>
             <option value="Sa">Samstag</option>
@@ -139,13 +140,34 @@
     </div>
 </div>
 
+
 <input type="submit" value="Berechnen">
 </form>
+**
 <div id="results">
     <!-- Results will be displayed here -->
+    <table>
+        <tr><td>BD+1 (für fünften Bereitschaftsdienst)</td><td>${result.BDPlus1.toFixed(2)}</td></tr>
+        <tr><td>BD+2 (für sechsten Bereitschaftsdienst)</td><td>${result.BDPlus2.toFixed(2)}</td></tr>
+        <tr><td>BD+3 (für siebten Bereitschaftsdienst)</td><td>${result.BDPlus3.toFixed(2)}</td></tr>
+        <tr><td>BD+4 (für achten Bereitschaftsdienst)</td><td>${result.BDPlus4.toFixed(2)}</td></tr>
+        <tr><td>BD+5 (für neunten Bereitschaftsdienst)</td><td>${result.BDPlus5.toFixed(2)}</td></tr>
+    </table>
+</div>
+
+<!-- Additional on-call fields -->
+<div id="additionalOnCalls">
+    <!-- ... existing <div> elements ... -->
+    <div>
+        <label for="fifthOnCall">Fünfter Bereitschaftsdienst:</label>
+        <select id="fifthOnCall">
+            <!-- ... options ... -->
+        </select><br>
     </div>
+    <!-- ... repeat for sixthOnCall, seventhOnCall, etc. ... -->
+</div>
     <div class="info">
-        Dieser Rechner geht davon aus, dass die Person ihre Pausenzeit geändert hat. Von 23:00 - 23:45 Uhr zu 16:00 - 16:45 Uhr.
+        Dieser Rechner geht davon aus, dass ihr die Pausen von 23:00 - 23:45 Uhr auf  16:00 - 16:45 Uhr umgepeppt habt.
     </div>
 </body>
 </html>
