@@ -1,23 +1,24 @@
-document.addEventListener('DOMContentLoaded', function() {
-    function updateDiensteAndVisibility() {
-        // Calculate the total number of Dienste
-        const MoDo = parseInt(document.getElementById('MoDo').value);
-        const Fr = parseInt(document.getElementById('Fr').value);
-        const Sa = parseInt(document.getElementById('Sa').value);
-        const So = parseInt(document.getElementById('So').value);
-        const Feiertag = parseInt(document.getElementById('Feiertag').value);
-        const totalBDs = MoDo + Fr + Sa + So + Feiertag;
+function updateDiensteAndVisibility() {
+    // Calculate the total number of Dienste
+    const MoDo = parseInt(document.getElementById('MoDo').value);
+    const Fr = parseInt(document.getElementById('Fr').value);
+    const Sa = parseInt(document.getElementById('Sa').value);
+    const So = parseInt(document.getElementById('So').value);
+    const Feiertag = parseInt(document.getElementById('Feiertag').value);
+    const totalBDs = MoDo + Fr + Sa + So + Feiertag;
 
-        // Update the display for total Dienste
-        document.getElementById('totalBDsDisplay').textContent = 'Total Dienste: ' + totalBDs;
+    // Update the display for total Dienste
+    document.getElementById('totalBDsDisplay').textContent = 'Total Dienste: ' + totalBDs;
 
-        // Show or hide additional on-call fields based on totalBDs
-        for (let i = 1; i <= 5; i++) {
-            const container = document.getElementById(`additionalOnCall${i}Container`);
-            container.style.display = totalBDs > 4 ? 'block' : 'none';
+    // Show or hide additional on-call fields based on totalBDs
+    for (let i = 1; i <= 5; i++) {
+        const container = document.getElementById(`additionalOnCall${i}Container`);
+        if (i <= totalBDs - 4) {
+            container.style.display = 'block';
+        } else {
+            container.style.display = 'none';
         }
     }
-
     // Event listeners for Dienste dropdown changes
     ['MoDo', 'Fr', 'Sa', 'So', 'Feiertag'].forEach(id => {
         document.getElementById(id).addEventListener('change', updateDiensteAndVisibility);
