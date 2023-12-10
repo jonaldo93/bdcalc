@@ -13,7 +13,7 @@ function updateDiensteAndVisibility() {
     // Show or hide additional on-call fields based on totalBDs
     for (let i = 1; i <= 5; i++) {
         const container = document.getElementById(`additionalOnCall${i}Container`);
-        if (i <= totalBDs - 4) {
+        if (totalBDs >= i + 4) {  // Adjusted condition
             container.style.display = 'block';
         } else {
             container.style.display = 'none';
