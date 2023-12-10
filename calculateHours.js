@@ -1,24 +1,30 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Function to update the visibility of additional on-call fields
-    function updateAdditionalOnCallsVisibility() {
-        var totalBDs = parseInt(document.getElementById('totalBDs').value);
+    function updateDiensteAndVisibility() {
+        // Calculate the total number of Dienste
+        const MoDo = parseInt(document.getElementById('MoDo').value);
+        const Fr = parseInt(document.getElementById('Fr').value);
+        const Sa = parseInt(document.getElementById('Sa').value);
+        const So = parseInt(document.getElementById('So').value);
+        const Feiertag = parseInt(document.getElementById('Feiertag').value);
+        const totalBDs = MoDo + Fr + Sa + So + Feiertag;
 
-        // Hide all additional on-call fields initially
+        // Update the display for total Dienste
+        document.getElementById('totalBDsDisplay').textContent = 'Total Dienste: ' + totalBDs;
+
+        // Show or hide additional on-call fields based on totalBDs
         for (let i = 1; i <= 5; i++) {
-            document.getElementById(`additionalOnCall${i}Container`).style.display = 'none';
-        }
-
-        // Show the required number of additional on-call fields
-        for (let i = 1; i <= totalBDs - 4; i++) {
-            document.getElementById(`additionalOnCall${i}Container`).style.display = 'block';
+            const container = document.getElementById(`additionalOnCall${i}Container`);
+            container.style.display = totalBDs > 4 ? 'block' : 'none';
         }
     }
 
-    // Event listener for totalBDs change
-    document.getElementById('totalBDs').addEventListener('change', updateAdditionalOnCallsVisibility);
+    // Event listeners for Dienste dropdown changes
+    ['MoDo', 'Fr', 'Sa', 'So', 'Feiertag'].forEach(id => {
+        document.getElementById(id).addEventListener('change', updateDiensteAndVisibility);
+    });
 
-    // Call the function on page load to set the initial state
-    updateAdditionalOnCallsVisibility();
+    // Initialize the display and visibility on page load
+    updateDiensteAndVisibility();
 
     // Event listener for short notice work
     document.getElementById('shortNoticeYesNo').addEventListener('change', function() {
