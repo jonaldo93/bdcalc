@@ -66,6 +66,20 @@
             padding: 10px;
             border-radius: 4px;
         }
+        .flexDienstRow {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+        }
+
+        .flexDienstRow label {
+            margin-right: 10px;
+        }
+
+        .flexDienstRow select {
+            margin-right: 20px;
+        }
+
         #totalBDsDisplayContainer {
             margin-top: 20px;
             background-color: #e7f4e4; /* Light green background */
@@ -90,6 +104,9 @@
     <div id="totalBDsDisplayContainer">
     <strong>Total Dienste: </strong><span id="totalBDsDisplay">0</span>
     </div>
+    <div id="errorDisplayContainer" style="display: none; color: red; margin-top: 10px;">
+        <span id="errorDisplay"></span>
+    </div>    
     <form id="hoursForm">
         <label for="MoDo">Mo-Do:</label>
         <select id="MoDo">
@@ -223,36 +240,30 @@
             </select><br>
         </div>
 
-      
         <!-- Short Notice Work Question -->
         <label for="shortNoticeYesNo">Kurzfristig eingesprungen?</label>
         <select id="shortNoticeYesNo">
             <option value="Nein">Nein</option>
             <option value="Ja">Ja</option>
         </select><br>
+
+        <!-- Hidden section for number of Flex Dienste -->
+        <label for="numFlexDienste" id="labelNumFlexDienste" style="display: none;">Anzahl der Flex Dienste:</label>
+        <select id="numFlexDienste" style="display: none;">
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+        </select><br>
+        <!-- Container for dynamically added Flex Dienste details -->
+        <div id="flexDiensteContainer" style="display: none;"></div>
         
-        <!-- Hidden sections that appear based on the above answer -->
-        <div id="shortNoticeDetails" style="display: none;">
-            <!-- How Short Notice -->
-            <label for="shortNoticeDuration">Wie kurzfristig?</label>
-            <select id="shortNoticeDuration">
-                <option value="FlexGreater96">>96h vorher</option>
-                <option value="Flex48To96">48-96h vorher</option>
-                <option value="FlexLess48"><48h vorher</option>
-            </select><br>
-        
-            <!-- Which Day -->
-            <label for="shortNoticeDay">An welchem Tag?</label>
-            <select id="shortNoticeDay">
-                <option value="MoDo">Montag-Donnerstag</option>
-                <option value="Fr">Freitag</option>
-                <option value="Sa">Samstag</option>
-                <option value="So">Sonntag</option>
-                <option value="Feiertag">Feiertag</option>
-            </select><br>
-        </div>
-     
-        </div>
         <input type="submit" value="Berechnen">
         <input type="reset" value="Zurücksetzen" id="resetButton">
     </form>
