@@ -67,19 +67,24 @@
             border-radius: 4px;
         }
         .flexDienstRow {
-        display: flex;
-        align-items: center;
-        margin-bottom: 10px;
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 10px;
         }
 
-        .flexDienstRow label {
-            margin-right: 10px;
+        .dropdown-container {
+            display: flex;
+            flex-direction: column;
+            margin-right: 20px; /* Space between columns */
         }
 
-        .flexDienstRow select {
-            margin-right: 20px;
+        .dropdown-container label {
+            margin-bottom: 5px; /* Space between label and dropdown */
         }
 
+        .dropdown-container select {
+            width: 100%; /* Adjust as needed for dropdown width */
+        }
         #totalBDsDisplayContainer {
             margin-top: 20px;
             background-color: #e7f4e4; /* Light green background */
@@ -97,10 +102,50 @@
             color: #333; /* Darker text for the number */
             font-size: 16px;
         }
+        /* Style for the Hourly Wage Dropdown and its Label */
+        .label-hourly-wage {
+            display: block;
+            margin-top: 20px;
+            color: #333;
+            font-size: 16px;
+        }
+
+        #hourlyWageSelection {
+            margin: 5px 0 15px;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            width: calc(100% - 22px);
+            font-size: 16px;
+        }
+        /* Style for the total sum row */
+        .total-sum-row {
+            font-weight: bold;
+        }
+
     </style>
 </head>
 <body>
     <h1>BD CALC </h1>
+    <label for="hourlyWageSelection" class="label-hourly-wage">Gehaltsstufe:</label>
+<select id="hourlyWageSelection" class="hourly-wage-select">
+    <option value="Ä1">Ä1</option>
+    <option value="Ä2">Ä2</option>
+    <option value="Ä3">Ä3</option>
+    <option value="Ä4">Ä4</option>
+    <option value="Ä5">Ä5</option>
+    <option value="Ä6">Ä6</option>
+    <option value="FÄ1">FÄ1</option>
+    <option value="FÄ2">FÄ2</option>
+    <option value="FÄ3">FÄ3</option>
+    <option value="FÄ4">FÄ4</option>
+    <option value="FÄ5">FÄ5</option>
+    <option value="FÄ6">FÄ6</option>
+    <option value="OÄ1">OÄ1</option>
+    <option value="OÄ2">OÄ2</option>
+    <option value="OÄ3">OÄ3</option>
+    <option value="CA">CA-Vertreter</option>
+</select>
     <div id="totalBDsDisplayContainer">
     <strong>Total Dienste: </strong><span id="totalBDsDisplay">0</span>
     </div>
@@ -108,7 +153,7 @@
         <span id="errorDisplay"></span>
     </div>    
     <form id="hoursForm">
-        <label for="MoDo">Mo-Do:</label>
+        <label for="MoDo">Montag-Donnerstag:</label>
         <select id="MoDo">
             <option value="0">0</option>
             <option value="1">1</option>
@@ -122,7 +167,7 @@
             <option value="9">9</option>
         </select><br>       
         
-        <label for="Fr">Fr:</label>
+        <label for="Fr">Freitag:</label>
         <select id="Fr">
             <option value="0">0</option>
             <option value="1">1</option>
@@ -136,7 +181,7 @@
             <option value="9">9</option>
         </select><br>  
         
-        <label for="Sa">Sa:</label>
+        <label for="Sa">Samstag:</label>
         <select id="Sa">
             <option value="0">0</option>
             <option value="1">1</option>
@@ -150,7 +195,7 @@
             <option value="9">9</option>
         </select><br>  
         
-        <label for="So">So:</label>
+        <label for="So">Sonntag:</label>
         <select id="So">
             <option value="0">0</option>
             <option value="1">1</option>
@@ -178,7 +223,6 @@
             <option value="9">9</option>
         </select><br>  
 
-        <!-- Additional on-call fields, initially hidden -->
         <!-- Additional on-call fields, initially hidden -->
         <div id="additionalOnCall1Container" style="display: none;">
             <label for="additionalOnCallSelect1">Fünfter Bereitschaftsdienst:</label>
@@ -267,11 +311,8 @@
         <input type="submit" value="Berechnen">
         <input type="reset" value="Zurücksetzen" id="resetButton">
     </form>
-
-    <div id="results">
-        <!-- Results will be displayed here -->
-    </div>
-
+    <!-- Empty container for dynamically added results -->
+    <div id="results"></div>
     <div class="info">
         Dieser Rechner geht davon aus, dass ihr die Pausen von 23:00 - 23:45 Uhr auf  16:00 - 16:45 Uhr umgepeppt habt.
     </div>
