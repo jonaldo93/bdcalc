@@ -25,7 +25,7 @@ const rates = {
     MoDo: { BD: 11.75, Rate25: 5, Rate40: 4, TotalTime: 11.75 + 8 },
     Fr: { BD: 13.25, Rate25: 5, Rate40: 4, TotalTime: 13.25 + 8 },
     Sa: { BD: 19, Rate25: 5, Rate40: 4, SamstagExtra: 0.5, SamstagBD25: 8.75, TotalTime: 19 + 5.25 },
-    So: { BD: 18, Rate25: 5, Rate40: 4, Sonntag: 4.75, SonntagBD: 10.25, TotalTime: 18 + 5.25 },
+    So: { BD: 18, Rate25: 5, Rate40: 4, Sonntag: 4.25, SonntagBD: 10.25, TotalTime: 18 + 5.25 },
     Feiertag: { BD: 18, Rate25: 5, Rate40: 4, Feiertag35: 4.75, Feiertag25: 10.25, TotalTime: 18 + 5.25 }
 };
 
