@@ -4,7 +4,7 @@ updateDiensteAndVisibility();
 // Gehaltsstufendefinition
 const wageValues = {
     'Ä1': 5298, 'Ä2': 5563, 'Ä3': 5829, 'Ä4': 6095, 'Ä5': 6361, 'Ä6': 6627,
-    'FÄ1': 6991, 'FÄ2': 7264, 'FÄ3': 7578, 'FÄ4': 8092, 'FÄ5': 8757, 'FÄ6': 9271,
+    'FÄ1': 6991, 'FÄ2': 7284, 'FÄ3': 7578, 'FÄ4': 8092, 'FÄ5': 8757, 'FÄ6': 9271,
     'OÄ1': 8757, 'OÄ2': 9271, 'OÄ3': 9839,
     'CA': 10301
 };
@@ -19,25 +19,37 @@ const categoryNamesMapping = {
     Feiertag25: "Feiertagsarbeit BD 25%"
 };
 
-
 // Define the base rates
 const rates = {
     MoDo: { BD: 11.75, Rate25: 5, Rate40: 4, TotalTime: 11.75 + 8 },
     Fr: { BD: 13.25, Rate25: 5, Rate40: 4, TotalTime: 13.25 + 8 },
     Sa: { BD: 19, Rate25: 5, Rate40: 4, SamstagExtra: 0.5, SamstagBD25: 8.75, TotalTime: 19 + 5.25 },
-    So: { BD: 18, Rate25: 5, Rate40: 4, Sonntag: 4.25, SonntagBD: 10.25, TotalTime: 18 + 5.25 },
+    So: { BD: 18, Rate25: 5, Rate40: 4, Sonntag: 4.75, SonntagBD: 10.25, TotalTime: 18 + 5.25 },
     Feiertag: { BD: 18, Rate25: 5, Rate40: 4, Feiertag35: 4.75, Feiertag25: 10.25, TotalTime: 18 + 5.25 }
 };
 
 // Define factors and hourly wage
 const factors = {
-    BD: 0.95, // Example factor for BD
-    Nacht25: 0.25, // Example factor for Nacht 25%
-    Nacht40: 0.4, // Example factor for Nacht 40%
+    BD: 0.95, 
+    Nacht25: 0.25,
+    Nacht40: 0.4, 
     SonntagBD: 0.25,
     Sonntag: 0.25, 
     Feiertag: 0.35
 };
+
+const tooltipExplanations = {
+    anzahlFaktor: `<p>Die Gehaltsabrechnungen sind hier inkohärent. Bei BD 95% und bei BD+X wird die Zeit entsprechend multipliziert, 
+    sodass in der Abrechnung diese Zahl geringer ausfällt als hier in der Simulation.</p>
+    <p>Bei allen anderen Lohnarten wird der Stundenlohn mit dem Faktor multipliziert; die Zeit bleibt unberührt.</p>
+    <p>Ich habe mich dafür entschieden, hier einmal beide Wege nachzuzeichen, auch wenn es dadurch leider etwas unübersichtlicher wurde.</p>`,
+
+    faktorBetrag: `<p>Die Gehaltsabrechnungen sind hier inkohärent. Bei BD 95% und bei BD+X wird die Zeit entsprechend multipliziert, 
+    sodass in der Abrechnung diese Zahl geringer ausfällt als hier in der Simulation.</p>
+    <p>Bei allen anderen Lohnarten wird der Stundenlohn mit dem Faktor multipliziert; die Zeit bleibt unberührt.</p>
+    <p>Ich habe mich dafür entschieden, hier einmal beide Wege nachzuzeichen, auch wenn es dadurch leider etwas unübersichtlicher wurde.</p>`
+};
+
 
 function updateDiensteAndVisibility() {
     // Check if elements exist
@@ -80,18 +92,27 @@ function updateDiensteAndVisibility() {
     }
     }
 
-// Function to calculate the hourly wage
 function calculateHourlyWage() {
     console.log("Element check:", document.getElementById('hourlyWageSelection')); // Debugging line
 
     const selectedOption = document.getElementById('hourlyWageSelection').value;
     console.log("Selected wage option:", selectedOption); // Debugging line
 
+    // Check for special cases and manually set hourly wage
+    if (selectedOption === 'Ä2') {
+        console.log("Calculated hourly wage for Ä2:", 30.47);
+        return 30.47;
+    } else if (selectedOption === 'FÄ1') {
+        console.log("Calculated hourly wage for FÄ1:", 38.29);
+        return 38.29;
+    }
+
+    // For all other options, calculate normally
     const wage = wageValues[selectedOption];
     console.log("Wage from wageValues:", wage); // Debugging line
 
     if (wage && !isNaN(wage)) {
-        const hourlyWage = wage * 3 / 13 / 42;
+        const hourlyWage = Number((wage / 182.62).toFixed(2));
         console.log("Calculated hourly wage:", hourlyWage); // Debugging line
         return hourlyWage;
     } else {
@@ -99,7 +120,7 @@ function calculateHourlyWage() {
         return 0; // Return a default value or handle the error as needed
     }
 }
-    
+
 // Set up event listeners outside the function
 ['MoDo', 'Fr', 'Sa', 'So', 'Feiertag'].forEach(id => {
     document.getElementById(id).addEventListener('change', updateDiensteAndVisibility);
@@ -533,6 +554,8 @@ document.getElementById('hoursForm').addEventListener('submit', function(event) 
             <th>Lohnart</th>
             <th>Anzahl</th>
             <th>Faktor</th>
+            <th><span class="tooltip">Anzahl * Faktor <sup>1</sup><span class="tooltiptext">${tooltipExplanations.anzahlFaktor}</span></span></th>
+            <th><span class="tooltip">Faktor * Betrag <sup>2</sup><span class="tooltiptext">${tooltipExplanations.faktorBetrag}</span></span></th>
             <th>Betrag/E.</th>
             <th>Produkt ("Betrag")</th>
         </tr>`;
@@ -547,10 +570,13 @@ document.getElementById('hoursForm').addEventListener('submit', function(event) 
         const categoryHoursWorked = output.hoursWorked[category] || 0; // Get the hours worked for each category
             const categoryFactor = factors[category] || 0;
             const categoryResult = output.results[category].result || 0; // Using the calculated result
+            const product = categoryHoursWorked * categoryFactor; // Calculate the product of Anzahl and Faktor
+            const faktorBetragProduct = categoryFactor * hourlyWage; // Calculate the product of Faktor and Betrag/E.
 
-            
+            console.log(`Category: ${category}, Hours Worked: ${categoryHoursWorked}, Factor: ${categoryFactor}, Product: ${product}, Result: ${categoryResult}`);
+
             sumOfResults += categoryResult; // Add to the sum
-            
+
             // Use the mapping to get the display name
             const displayName = categoryNamesMapping[category] || category; // Fallback to original category name if not mapped
 
@@ -559,6 +585,8 @@ document.getElementById('hoursForm').addEventListener('submit', function(event) 
                     <td>${displayName}</td>
                     <td>${categoryHoursWorked.toFixed(2)}</td> <!-- Display Hours Worked -->
                     <td>${categoryFactor.toFixed(2)}</td>
+                    <td>${product.toFixed(2)}</td> <!-- New column for the product -->
+                    <td>${faktorBetragProduct.toFixed(2)}</td> <!-- New column for Faktor * Betrag -->
                     <td>${hourlyWage.toFixed(2)}</td>
                     <td>${categoryResult.toFixed(2)}</td>
                 </tr>`;
@@ -571,12 +599,15 @@ document.getElementById('hoursForm').addEventListener('submit', function(event) 
 
     // Include conditional BD+ rows
     bdPlusResults.forEach(bdPlusResult => {
+        const bdPlusFactorBetragProduct = bdPlusResult.factor * hourlyWage; // Calculate product of factor and hourly wage
         if (bdPlusResult.value > 0) {
             resultsHTML += `
                 <tr>
                     <td>${bdPlusResult.type}</td>
                     <td>${bdPlusResult.hoursWorked.toFixed(2)}</td> <!-- Include Anzahl for BD+ entries -->
                     <td>${bdPlusResult.factor.toFixed(2)}</td>
+                    <td>${(bdPlusResult.hoursWorked * bdPlusResult.factor).toFixed(2)}</td> <!-- Product of Anzahl and Faktor -->
+                    <td>${bdPlusFactorBetragProduct.toFixed(2)}</td> <!-- Placeholder for Faktor * Betrag -->
                     <td>${hourlyWage.toFixed(2)}</td>
                     <td>${bdPlusResult.value.toFixed(2)}</td>
                 </tr>`;
@@ -585,22 +616,31 @@ document.getElementById('hoursForm').addEventListener('submit', function(event) 
 
     // Handle Feiertag results
     if (feiertagResults.FeiertagAktiv35 > 0) {
+        const feiertagAktiv35FactorBetragProduct = factors.Feiertag * hourlyWage;
+        const feiertagAktiv35AnzahlFaktorProduct = feiertagResults.HoursFeiertag35 * factors.Feiertag;
+
         resultsHTML += `
             <tr>
                 <td>${categoryNamesMapping['FeiertagAktiv35']}</td>
                 <td>${feiertagResults.HoursFeiertag35.toFixed(2)}</td>
                 <td>${factors.Feiertag.toFixed(2)}</td>
+                <td>${feiertagAktiv35AnzahlFaktorProduct.toFixed(2)}</td>
+                <td>${feiertagAktiv35FactorBetragProduct.toFixed(2)}</td>
                 <td>${hourlyWage.toFixed(2)}</td>
                 <td>${feiertagResults.FeiertagAktiv35.toFixed(2)}</td>
             </tr>`;
         sumOfResults += feiertagResults.FeiertagAktiv35;
     }
     if (feiertagResults.Feiertag25 > 0) {
+        const feiertag25FactorBetragProduct = factors.Feiertag * hourlyWage;
+        const feiertag25AnzahlFaktorProduct = feiertagResults.HoursFeiertag25 * factors.Feiertag;    
         resultsHTML += `
             <tr>
                 <td>${categoryNamesMapping['Feiertag25']}</td>
                 <td>${feiertagResults.HoursFeiertag25.toFixed(2)}</td>
                 <td>${factors.Feiertag.toFixed(2)}</td>
+                <td>${feiertag25AnzahlFaktorProduct.toFixed(2)}</td>
+                <td>${feiertag25FactorBetragProduct.toFixed(2)}</td>
                 <td>${hourlyWage.toFixed(2)}</td>
                 <td>${feiertagResults.Feiertag25.toFixed(2)}</td>
             </tr>`;
@@ -614,6 +654,7 @@ document.getElementById('hoursForm').addEventListener('submit', function(event) 
     // Add rows for Flex Dienste
     output.FlexDiensteResults.forEach(flexDienst => {
         sumOfResults += flexDienst.result;
+        const flexDienstFactorBetragProduct = flexDienst.factor * hourlyWage; // Calculate product of factor and hourly wage
         if (flexDienst.result > 0) {
             console.log("Adding row for", flexDienst.type);
 
@@ -622,6 +663,8 @@ document.getElementById('hoursForm').addEventListener('submit', function(event) 
                     <td>${flexDienst.type}</td>
                     <td>${flexDienst.hoursWorked.toFixed(2)}</td>
                     <td>${flexDienst.factor.toFixed(2)}</td>
+                    <td>${(flexDienst.hoursWorked * flexDienst.factor).toFixed(2)}</td> <!-- Product of Anzahl and Faktor -->
+                    <td>${flexDienstFactorBetragProduct.toFixed(2)}</td> <!-- Placeholder for Faktor * Betrag -->
                     <td>${hourlyWage.toFixed(2)}</td>
                     <td>${flexDienst.result.toFixed(2)}</td>
                 </tr>`;
@@ -631,7 +674,7 @@ document.getElementById('hoursForm').addEventListener('submit', function(event) 
     // Add final row for sum of results with a class for styling
     resultsHTML += `
     <tr class="total-sum-row">
-        <td colspan="4">Summe der Nachberechnungen</td>
+        <td colspan="6">Summe der Nachberechnungen</td>
         <td>${sumOfResults.toFixed(2)}</td>
     </tr>`;
 
