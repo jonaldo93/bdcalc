@@ -122,7 +122,46 @@
         .total-sum-row {
             font-weight: bold;
         }
+        .tooltip {
+            position: relative;
+            cursor: pointer;
+            display: inline-block;
+        }
 
+        .tooltip sup {
+            font-size: smaller;
+            color: black;
+            background-color: lightblue;
+            border-radius: 50%; /* Circular shape */
+            padding: 0 3px; /* Adjust padding to get the desired circle size */
+            vertical-align: top;
+            line-height: normal;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 400px; /* Adjust the percentage as needed */
+            white-space: normal;
+            background-color: #e6f7ff;
+            color: #000;
+            text-align: block;
+            border-radius: 6px;
+            padding: 10px 15px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -60px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-family: Arial, sans-serif; /* Example of a narrower font */
+            font-weight: normal; /* Adjust font-weight as needed */
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
@@ -314,7 +353,9 @@
     <!-- Empty container for dynamically added results -->
     <div id="results"></div>
     <div class="info">
-        Dieser Rechner geht davon aus, dass ihr die Pausen von 23:00 - 23:45 Uhr auf  16:00 - 16:45 Uhr umgepeppt habt.
+        Dieser Rechner geht davon aus, dass ihr die Pausen von 23:00 - 23:45 Uhr auf  16:00 - 16:45 Uhr umgepeppt habt. 
+        Dies ist nur an Wochendenden / Feiertagen relevant. Hier kommt es dann zu einer Differenz von 0.75 Einheiten pro nicht-umgepeppte Nacht 
+        in der Zeile "Nachtarbeit BD 25%". 
     </div>
 </body>
 </html>
