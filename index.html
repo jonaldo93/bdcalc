@@ -172,30 +172,38 @@
         /* Mobile-specific styles */
         @media screen and (max-width: 768px) {
             .container {
-                padding: 10px;
+                padding: 0; /* Remove padding or set it to a smaller value */
             }
 
             input[type="number"], select, input[type="submit"], input[type="reset"] {
-                /* Adjust width for smaller screens */
-                width: 100%; /* Full width */
+                width: 100%; /* Full width on smaller screens */
             }
 
-            .table-responsive {
-                overflow-x: auto; /* Enable horizontal scroll for tables */
+            /* Reduce padding or margins as needed on smaller screens for other elements */
+            .info, form {
+                padding: 5px;
             }
-
-            .dropdown-container {
-                margin-right: 10px; /* Reduce margin between dropdowns */
+            /* Add margin to the bottom of the first button to separate them when stacked */
+            input[type="submit"]:first-of-type {
+                margin-bottom: 10px; /* Adjust the value as needed */
             }
-
-            /* Adjust font sizes, paddings, or margins as needed for smaller screens */
         }
 
         /* Style for horizontal scrolling on tables */
         .table-responsive {
+            width: 100%; /* Use 100% width */
+            overflow-x: auto; /* Enable horizontal scroll if table is wider */
+            -webkit-overflow-scrolling: touch; /* Smooth scrolling on touch devices */
+        }
+        table {
+            max-width: 100%; /* This ensures the table is not wider than its container */
+            border-collapse: collapse;
+        }
+        
+        /* Ensure that the results container allows for horizontal scrolling */
+        #results {
             overflow-x: auto;
         }
-
     </style>
 </head>
 <body>
