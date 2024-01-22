@@ -149,9 +149,9 @@
             padding: 10px 15px;
             position: absolute;
             z-index: 1;
-            bottom: 125%;
-            left: 50%;
-            margin-left: -60px;
+            top: 130%; /* Position it below the element */
+            left: 50%; /* Start from the middle of the element */
+            margin-left: -200px; /* Shift it back by half its width to center it */
             opacity: 0;
             transition: opacity 0.3s;
             font-family: Arial, sans-serif; /* Example of a narrower font */
@@ -162,9 +162,44 @@
             visibility: visible;
             opacity: 1;
         }
+        /* General container style */
+        .container {
+            max-width: 1000px; /* Adjust as needed */
+            margin: auto;
+            padding: 20px;
+        }
+
+        /* Mobile-specific styles */
+        @media screen and (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            input[type="number"], select, input[type="submit"], input[type="reset"] {
+                /* Adjust width for smaller screens */
+                width: 100%; /* Full width */
+            }
+
+            .table-responsive {
+                overflow-x: auto; /* Enable horizontal scroll for tables */
+            }
+
+            .dropdown-container {
+                margin-right: 10px; /* Reduce margin between dropdowns */
+            }
+
+            /* Adjust font sizes, paddings, or margins as needed for smaller screens */
+        }
+
+        /* Style for horizontal scrolling on tables */
+        .table-responsive {
+            overflow-x: auto;
+        }
+
     </style>
 </head>
 <body>
+    <div class="container">
     <h1>BD CALC </h1>
     <label for="hourlyWageSelection" class="label-hourly-wage">Gehaltsstufe:</label>
 <select id="hourlyWageSelection" class="hourly-wage-select">
@@ -357,5 +392,6 @@
         Dies ist nur an Wochendenden / Feiertagen relevant. Hier kommt es dann zu einer Differenz von 0.75 Einheiten pro nicht-umgepeppte Nacht 
         in der Zeile "Nachtarbeit BD 25%". 
     </div>
+    </div>    
 </body>
 </html>
