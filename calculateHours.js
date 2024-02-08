@@ -24,7 +24,7 @@ const rates = {
     MoDo: { BD: 11.75, Rate25: 5, Rate40: 4, TotalTime: 11.75 + 8 },
     Fr: { BD: 13.25, Rate25: 5, Rate40: 4, TotalTime: 13.25 + 8 },
     Sa: { BD: 19, Rate25: 5, Rate40: 4, SamstagExtra: 0.5, SamstagBD25: 8.75, TotalTime: 19 + 5.25 },
-    So: { BD: 18, Rate25: 5, Rate40: 4, Sonntag: 4.75, SonntagBD: 10.25, TotalTime: 18 + 5.25 },
+    So: { BD: 18, Rate25: 5, Rate40: 4, Sonntag: 4.25, SonntagBD: 10.25, TotalTime: 18 + 5.25 },
     Feiertag: { BD: 18, Rate25: 5, Rate40: 4, Feiertag35: 4.75, Feiertag25: 10.25, TotalTime: 18 + 5.25 }
 };
 
@@ -172,6 +172,20 @@ document.getElementById('numFlexDienste').addEventListener('change', function() 
     }
 
     flexDiensteContainer.style.display = numFlexDienste > 0 ? 'block' : 'none';
+});
+
+// Event listener for Überstunden
+document.getElementById('overtimeCalculation').addEventListener('change', function() {
+    const overtimeSelection = this.value;
+    const overtimeInput = document.getElementById('AnzahlUeberstunden');
+    overtimeInput.style.display = (overtimeSelection === 'berechnen') ? 'block' : 'none';
+});
+
+// Event listener for vacationSickDays dropdown
+document.getElementById('vacationSickDays').addEventListener('change', function() {
+    const vacationSickDaysSelection = this.value;
+    const vacationSickDaysInput = document.getElementById('AnzahlKU');
+    vacationSickDaysInput.style.display = (vacationSickDaysSelection === 'berechnen') ? 'block' : 'none';
 });
 
 // Event listener for reset button
@@ -477,6 +491,13 @@ function calculateHours(inputDays, hourlyWage) {
     return { output, ratesUsed };
 }
 
+// Function to toggle Entgeltfortzahlung inputs
+function toggleEntgeltfortzahlungInputs() {
+    const vacationSickDaysSelection = document.getElementById('vacationSickDays').value;
+    const entgeltfortzahlungInputs = document.getElementById('entgeltfortzahlungInputs');
+    entgeltfortzahlungInputs.style.display = (vacationSickDaysSelection === 'berechnen') ? 'block' : 'none';
+}
+
 function calculateHoursFromForm() {
     // Retrieve values from form elements
     const MoDo = parseInt(document.getElementById('MoDo').value, 10) || 0;
@@ -505,6 +526,39 @@ function calculateHoursFromForm() {
     // Correctly return the output, hourlyWage, and ratesUsed
     return { output, hourlyWage, ratesUsed };
 }
+
+// Function to calculate the amount per day for Entgeltfortzahlung
+function calculateAmountPerDay() {
+    // Retrieve input values and calculate their sums
+    const sumNachberechnung = sumInputValues(['sumNachberechnung1', 'sumNachberechnung2', 'sumNachberechnung3']);
+    const zeitzuschlag = sumInputValues(['zeitzuschlag1', 'zeitzuschlag2', 'zeitzuschlag3']);
+    const leistungsentgelte = sumInputValues(['leistungsentgelte1', 'leistungsentgelte2', 'leistungsentgelte3']);
+    const jahressonder = sumInputValues(['jahressonder1', 'jahressonder2', 'jahressonder3']);
+    const sonderzahlung23 = sumInputValues(['sonderzahlung23_1', 'sonderzahlung23_2', 'sonderzahlung23_3']);
+    const urlaubsaufschlag = sumInputValues(['urlaubsaufschlag1', 'urlaubsaufschlag2', 'urlaubsaufschlag3']);
+    const krankenlohnaufschlag = sumInputValues(['krankenlohnaufschlag1', 'krankenlohnaufschlag2', 'krankenlohnaufschlag3']);
+
+    // Calculate the total subtract amount
+    const totalSubtract = zeitzuschlag + leistungsentgelte + jahressonder + sonderzahlung23 + urlaubsaufschlag + krankenlohnaufschlag;
+
+    // Log the totalSubtract
+    console.log('Total subtract amount:', totalSubtract);
+
+    // Calculate the per unit amount (amount per day)
+    const amountPerDay = (sumNachberechnung - totalSubtract) / 65;
+    
+    // Log the amountPerDay
+    console.log('Amount per day:', amountPerDay);
+
+    return amountPerDay;
+}
+
+// Helper function to sum input values
+function sumInputValues(ids) {
+    return ids.reduce((sum, id) => sum + (parseFloat(document.getElementById(id).value) || 0), 0);
+}
+
+
 
 // Event listener for form submission
 document.getElementById('hoursForm').addEventListener('submit', function(event) {
@@ -549,17 +603,18 @@ document.getElementById('hoursForm').addEventListener('submit', function(event) 
 
     // Initialize resultsHTML at the beginning
     let resultsHTML = `
+    <div class="table-responsive">
         <table style="width:100%; border-collapse: collapse;">
-        <tr>
-            <th>Lohnart</th>
-            <th>Anzahl</th>
-            <th>Faktor</th>
-            <th><span class="tooltip">Anzahl * Faktor <sup>1</sup><span class="tooltiptext">${tooltipExplanations.anzahlFaktor}</span></span></th>
-            <th><span class="tooltip">Faktor * Betrag <sup>2</sup><span class="tooltiptext">${tooltipExplanations.faktorBetrag}</span></span></th>
-            <th>Betrag/E.</th>
-            <th>Produkt ("Betrag")</th>
-        </tr>`;
-
+            <tr>
+                <th>Lohnart</th>
+                <th>Anzahl</th>
+                <th>Faktor</th>
+                <th><span class="tooltip">Anzahl * Faktor <sup>1</sup><span class="tooltiptext">${tooltipExplanations.anzahlFaktor}</span></span></th>
+                <th><span class="tooltip">Faktor * Betrag <sup>2</sup><span class="tooltiptext">${tooltipExplanations.faktorBetrag}</span></span></th>
+                <th>Betrag/E.</th>
+                <th>Produkt ("Betrag")</th>
+            </tr>`;
+            
     let sumOfResults = 0; // Initialize sum of results
 
     // Generate table rows for each category, excluding BDPlusResults
@@ -671,6 +726,74 @@ document.getElementById('hoursForm').addEventListener('submit', function(event) 
         }
     });
     
+    // Retrieve and parse AnzahlKU
+    const AnzahlKUInput = document.getElementById('AnzahlKU');
+    const AnzahlKU = AnzahlKUInput && AnzahlKUInput.style.display !== 'none' ? parseFloat(AnzahlKUInput.value) || 0 : 0;
+
+    // Check for NaN and log the value
+    if (isNaN(AnzahlKU)) {
+        console.error("AnzahlKU is not a valid number:", AnzahlKU);
+    } else {
+        console.log("Anzahl der Urlaubstage/Krankheitstage:", AnzahlKU.toFixed(2));
+    }
+    const AnzahlUeberstunden = document.getElementById('AnzahlUeberstunden').style.display !== 'none' ? parseFloat(document.getElementById('AnzahlUeberstunden').value) || 0 : 0;
+    const overtimeCalculationChoice = document.getElementById('overtimeCalculation').value;
+    console.log("Anzahl der Überstunden:", AnzahlUeberstunden.toFixed(2));
+    console.log("Anzahl der Urlaubstage/Krankheitstage:", AnzahlKU.toFixed(2));
+    
+    // Calculate additional money for Überstunden if 'berechnen' is selected
+    let additionalMoneyForUeberstunden = 0;
+    if (overtimeCalculationChoice === 'berechnen') {
+        additionalMoneyForUeberstunden = AnzahlUeberstunden * hourlyWage * 0.15;
+        console.log("Additional Money for Überstunden:", additionalMoneyForUeberstunden.toFixed(2));
+
+        // Calculate Faktor * Betrag for Überstunden
+        const faktorBetragForUeberstunden = 0.15 * hourlyWage;
+
+        // Add line to results for Überstunden
+        resultsHTML += `
+            <tr>
+                <td>Zeitzuschlag für Überstunden</td>
+                <td>${AnzahlUeberstunden.toFixed(2)}</td>
+                <td>0.15</td>
+                <td>${(AnzahlUeberstunden * 0.15).toFixed(2)}</td> <!-- Anzahl * Faktor -->
+                <td>${faktorBetragForUeberstunden.toFixed(2)}</td> <!-- Faktor * Betrag -->
+                <td>${hourlyWage.toFixed(2)}</td> <!-- Display Hourly Wage -->
+                <td>${additionalMoneyForUeberstunden.toFixed(2)}</td>
+            </tr>`;
+        sumOfResults += additionalMoneyForUeberstunden; // Add to the total sum
+    }
+    // Check if Entgeltfortzahlung should be calculated
+    const vacationSickDaysChoice = document.getElementById('vacationSickDays').value;
+    if (vacationSickDaysChoice === 'berechnen') {
+        // Call your function to calculate Entgeltfortzahlung
+        const amountPerDay = calculateAmountPerDay();
+
+        // Retrieve the number of holidays/sick days
+        const holidays = parseFloat(document.getElementById('AnzahlKU').value) || 0;
+
+        // Calculate the full sum
+        const fullSum = amountPerDay * holidays;
+
+        // Add Entgeltfortzahlung results to your results HTML
+        resultsHTML += `
+            <tr>
+                <td>Entgeltfortzahlung</td>
+                <td>${holidays} Tage</td>
+                <td>N/A</td> <!-- Faktor is not applicable here -->
+                <td>N/A</td> <!-- Anzahl * Faktor is not applicable -->
+                <td>N/A</td> <!-- Faktor * Betrag is not applicable -->
+                <td>${amountPerDay.toFixed(2)} €</td> <!-- Betrag/E. -->
+                <td>${fullSum.toFixed(2)} €</td> <!-- Produkt ("Betrag") -->
+            </tr>
+        `;
+        sumOfResults += fullSum;
+    }
+
+        // ... existing code to finalize resultsHTML ...
+
+        document.getElementById('results').innerHTML = resultsHTML;
+
     // Add final row for sum of results with a class for styling
     resultsHTML += `
     <tr class="total-sum-row">
@@ -680,5 +803,7 @@ document.getElementById('hoursForm').addEventListener('submit', function(event) 
 
     // Close the table and update the HTML
     resultsHTML += `</table>`;
+    // Close the responsive div
+    resultsHTML += `</div>`;
     document.getElementById('results').innerHTML = resultsHTML;
 });
