@@ -5,206 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BD CALC 2</title>
-    <script src="calculateHours.js" defer></script>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 20px;
-        }
-        h1 {
-            color: #333;
-        }
-        form {
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        label {
-            margin-top: 10px;
-        }
-        input[type="number"], select {
-            margin: 5px 0 15px;
-            padding: 10px;
-            border-radius: 4px;
-            border: 1px solid #ddd;
-            width: calc(100% - 22px);
-        }
-        input[type="submit"], input[type="reset"] {
-        background-color: #5cb85c;
-        color: white;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 16px;
-        }
-        
-        input[type="submit"]:hover, input[type="reset"]:hover {
-            background-color: #4cae4c;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            text-align: left;
-            padding: 12px;
-            border-bottom: 1px solid #ddd;
-        }
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-        .info {
-            margin-top: 20px;
-            background: #ffffe0;
-            border-left: 3px solid #ffeb3b;
-            padding: 10px;
-            border-radius: 4px;
-        }
-        .flexDienstRow {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 10px;
-        }
-
-        .dropdown-container {
-            display: flex;
-            flex-direction: column;
-            margin-right: 20px; /* Space between columns */
-        }
-
-        .dropdown-container label {
-            margin-bottom: 5px; /* Space between label and dropdown */
-        }
-
-        .dropdown-container select {
-            width: 100%; /* Adjust as needed for dropdown width */
-        }
-        #totalBDsDisplayContainer {
-            margin-top: 20px;
-            background-color: #e7f4e4; /* Light green background */
-            padding: 10px;
-            border-radius: 8px;
-            border: 1px solid #d4d4d4;
-            display: inline-block;
-            }
-        #totalBDsDisplayContainer strong {
-            color: #5cb85c; /* Green color for the label */
-            font-size: 16px;
-            }
-        #totalBDsDisplay {
-            font-weight: bold;
-            color: #333; /* Darker text for the number */
-            font-size: 16px;
-        }
-        /* Style for the Hourly Wage Dropdown and its Label */
-        .label-hourly-wage {
-            display: block;
-            margin-top: 20px;
-            color: #333;
-            font-size: 16px;
-        }
-
-        #hourlyWageSelection {
-            margin: 5px 0 15px;
-            padding: 10px;
-            border-radius: 4px;
-            border: 1px solid #ddd;
-            width: calc(100% - 22px);
-            font-size: 16px;
-        }
-        /* Style for the total sum row */
-        .total-sum-row {
-            font-weight: bold;
-        }
-        .tooltip {
-            position: relative;
-            cursor: pointer;
-            display: inline-block;
-        }
-
-        .tooltip sup {
-            font-size: smaller;
-            color: black;
-            background-color: lightblue;
-            border-radius: 50%; /* Circular shape */
-            padding: 0 3px; /* Adjust padding to get the desired circle size */
-            vertical-align: top;
-            line-height: normal;
-        }
-
-        .tooltip .tooltiptext {
-            visibility: hidden;
-            width: 400px; /* Adjust the percentage as needed */
-            white-space: normal;
-            background-color: #e6f7ff;
-            color: #000;
-            text-align: block;
-            border-radius: 6px;
-            padding: 10px 15px;
-            position: absolute;
-            z-index: 1;
-            top: 130%; /* Position it below the element */
-            left: 50%; /* Start from the middle of the element */
-            margin-left: -200px; /* Shift it back by half its width to center it */
-            opacity: 0;
-            transition: opacity 0.3s;
-            font-family: Arial, sans-serif; /* Example of a narrower font */
-            font-weight: normal; /* Adjust font-weight as needed */
-        }
-
-        .tooltip:hover .tooltiptext {
-            visibility: visible;
-            opacity: 1;
-        }
-        /* General container style */
-        .container {
-            max-width: 1000px; /* Adjust as needed */
-            margin: auto;
-            padding: 20px;
-        }
-
-        /* Mobile-specific styles */
-        @media screen and (max-width: 768px) {
-            .container {
-                padding: 0; /* Remove padding or set it to a smaller value */
-            }
-
-            input[type="number"], select, input[type="submit"], input[type="reset"] {
-                width: 100%; /* Full width on smaller screens */
-            }
-
-            /* Reduce padding or margins as needed on smaller screens for other elements */
-            .info, form {
-                padding: 5px;
-            }
-            /* Add margin to the bottom of the first button to separate them when stacked */
-            input[type="submit"]:first-of-type {
-                margin-bottom: 10px; /* Adjust the value as needed */
-            }
-        }
-
-        /* Style for horizontal scrolling on tables */
-        .table-responsive {
-            width: 100%; /* Use 100% width */
-            overflow-x: auto; /* Enable horizontal scroll if table is wider */
-            -webkit-overflow-scrolling: touch; /* Smooth scrolling on touch devices */
-        }
-        table {
-            max-width: 100%; /* This ensures the table is not wider than its container */
-            border-collapse: collapse;
-        }
-        
-        /* Ensure that the results container allows for horizontal scrolling */
-        #results {
-            overflow-x: auto;
-        }
-    </style>
+    <script src="calculateHours1.js" defer></script>
+    <link rel="stylesheet" type="text/css" href="style1.css">
 </head>
 <body>
     <div class="container">
@@ -390,16 +192,107 @@
         <!-- Container for dynamically added Flex Dienste details -->
         <div id="flexDiensteContainer" style="display: none;"></div>
         
-        <input type="submit" value="Berechnen">
-        <input type="reset" value="Zurücksetzen" id="resetButton">
+        <!-- Advanced Section Start -->
+        <div class="advanced-section">
+            <h3>Advanced</h3>
+            
+            <!-- Existing dropdown for Überstunden -->
+            <label for="overtimeCalculation">Zeitzuschlag f. Überstunden:<sup><a href="#footnote1" class="footnote" id="ref1">[1]</a></sup></label>
+            <select id="overtimeCalculation" class="advanced-dropdown">
+                <option value="nicht berechnen">nicht berechnen</option>
+                <option value="berechnen">berechnen</option>
+            </select><br>
+            <input type="text" id="AnzahlUeberstunden" class="number-input" placeholder="Anzahl der Überstunden (z.B. 5.50)" pattern="^\d+(\.\d{1,2})?$" title="Bitte eine Zahl mit bis zu zwei Dezimalstellen eingeben" style="display: none;">         
+            
+            <!-- adjusted dropdown and input for Urlaubstage/Krankheitstage -->
+            <label for="vacationSickDays">Urlaubstage/Krankheitstage:<sup><a href="#footnote2" class="footnote" id="ref2">[2]</a></sup></label>
+            <select id="vacationSickDays" class="advanced-dropdown" onchange="toggleEntgeltfortzahlungInputs()">
+                <option value="nicht berechnen">nicht berechnen</option>
+                <option value="berechnen">berechnen</option>
+            </select><br>
+            <input type="number" id="AnzahlKU" class="number-input" placeholder="Anzahl der Urlaubstage/Krankheitstage" style="display: none;">
+            
+            <!-- New section for Entgeltfortzahlung -->
+            <div id="entgeltfortzahlungInputs" style="display: none;">
+                <h4>Entgeltfortzahlung für Urlaubstage/Krankheitstage</h4>
+                <table>
+                    <tr>
+                        <th>Item</th>
+                        <th>Vor 3 Monaten</th>
+                        <th>Vor 2 Monaten</th>
+                        <th>Vor 1 Monat</th>
+                    </tr>
+                    <tr>
+                        <td>Summe Nachberechnung</td>
+                        <td><input type="number" id="sumNachberechnung1" step="0.01"></td>
+                        <td><input type="number" id="sumNachberechnung2" step="0.01"></td>
+                        <td><input type="number" id="sumNachberechnung3" step="0.01"></td>
+                    </tr>
+                    <tr>
+                        <td>Hiervon Zeitzuschlag f. Überstunden:</td>
+                        <td><input type="number" id="zeitzuschlag1" step="0.01"></td>
+                        <td><input type="number" id="zeitzuschlag2" step="0.01"></td>
+                        <td><input type="number" id="zeitzuschlag3" step="0.01"></td>
+                    </tr>
+                    <tr>
+                        <td>Hiervon Urlaubsaufschlag TVÄ:</td>
+                        <td><input type="number" id="urlaubsaufschlag1" step="0.01"></td>
+                        <td><input type="number" id="urlaubsaufschlag2" step="0.01"></td>
+                        <td><input type="number" id="urlaubsaufschlag3" step="0.01"></td>
+                    </tr>
+                    <tr>
+                        <td>Hiervon Krankenlohnaufschlag TVÄ:</td>
+                        <td><input type="number" id="krankenlohnaufschlag1" step="0.01"></td>
+                        <td><input type="number" id="krankenlohnaufschlag2" step="0.01"></td>
+                        <td><input type="number" id="krankenlohnaufschlag3" step="0.01"></td>
+                    </tr>
+                    <tr>
+                        <td>Hiervon Leistungsentgelte:</td>
+                        <td><input type="number" id="leistungsentgelte1" step="0.01"></td>
+                        <td><input type="number" id="leistungsentgelte2" step="0.01"></td>
+                        <td><input type="number" id="leistungsentgelte3" step="0.01"></td>
+                    </tr>
+                    <tr>
+                        <td>Hiervon Jahressonderzahlungen:</td>
+                        <td><input type="number" id="jahressonder1" step="0.01"></td>
+                        <td><input type="number" id="jahressonder2" step="0.01"></td>
+                        <td><input type="number" id="jahressonder3" step="0.01"></td>
+                    </tr>
+                    <tr>
+                        <td>Hiervon Sonderzahlungen nach Paragraph 23:<sup><a href="#footnote3" class="footnote" id="ref3">[3]</a></sup></td>
+                        <td><input type="number" id="sonderzahlung23_1" step="0.01"></td>
+                        <td><input type="number" id="sonderzahlung23_2" step="0.01"></td>
+                        <td><input type="number" id="sonderzahlung23_3" step="0.01"></td>
+                    </tr>
+                </table>
+            </div>
+        </div> 
+        <div class="buttons-container">
+            <button type="submit" id="submitBtn">Berechnen</button>
+            <button type="reset" id="resetButton">Zurücksetzen</button>
+        </div>
     </form>
+
     <!-- Empty container for dynamically added results -->
     <div id="results"></div>
+    
+    <!--Footnotes-->
+    
     <div class="info">
         Dieser Rechner geht davon aus, dass ihr die Pausen von 23:00 - 23:45 Uhr auf  16:00 - 16:45 Uhr umgepeppt habt. 
         Dies ist nur an Wochendenden / Feiertagen relevant. Hier kommt es dann zu einer Differenz von 0.75 Einheiten pro nicht-umgepeppte Nacht 
         in der Zeile "Nachtarbeit BD 25%". 
     </div>
+    <div class="footnote" id="footnote1">
+        <sup>[1]</sup> Die Überstunden (Code 40) kann man monatsbezogen im "Zeitausweis" im PEP einsehen: Cursor auf den Namen in der Zeile links legen, rechte Maustaste drücken und "Zeitausweis drucken..." auswählen. Dann "Vorschau"; und dann in der Box oben links ("Abrechnung").
+    </div>
+    <div class="footnote" id="footnote2">
+        <sup>[2]</sup> Hierfür braucht ihr die Abrechnungen der drei Monate, welche dem Monat der Rückrechnung vorausgingen. Beispiel: Rückrechnung für April im Juni - dann braucht ihr die Abrechnungen von Januar, Februar und März.
+    </div>
+    <div id="footnote3" class="footnote">
+        <sup>[3]</sup> Vermögenswirksame Leistungen, Jubiläumsprämien, Sterbegelt. Details hier: <a href="https://karriere.charite.de/fileadmin/user_upload/Entgelttabellen/Aerzteschaft/TV_%C3%84B_MarburgerBund_2023_unterschrieben.pdf#page=28">Entgelttabelle Ärzteschaft 2023 (Seite 28)</a>
+
+    </div>    
     </div>    
 </body>
 </html>
