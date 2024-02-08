@@ -1,0 +1,328 @@
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            margin-top: 10px;
+        }
+        input[type="number"], select {
+            margin: 5px 0 15px;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            width: calc(100%);
+        }
+       
+        input[type="submit"], input[type="reset"] {
+        background-color: #5cb85c;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        margin-top: 20px; /* Separate buttons from the form */
+        width: auto; /* Adjust width as needed */
+        }
+        
+        input[type="submit"]:hover, input[type="reset"]:hover {
+            background-color: #4cae4c;
+        }
+
+        .buttons-container button {
+            background-color: #5cb85c; /* Green background */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px; /* Separate buttons from the form */
+            width: auto; /* Adjust width as needed */
+        }
+        
+        .buttons-container button:hover {
+            background-color: #4cae4c; /* Slightly darker green on hover */
+        }
+        
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .info {
+            margin-top: 20px;
+            background: #ffffe0;
+            border-left: 3px solid #ffeb3b;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .flexDienstRow {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .dropdown-container {
+            display: flex;
+            flex-direction: column;
+            margin-right: 20px; /* Space between columns */
+        }
+
+        .dropdown-container label {
+            margin-bottom: 5px; /* Space between label and dropdown */
+        }
+
+        .dropdown-container select {
+            width: 100%; /* Adjust as needed for dropdown width */
+        }
+
+        select {
+            width: 100%; /* Ensure dropdowns take full width of container */
+        }
+        
+        #totalBDsDisplayContainer {
+            margin-top: 20px;
+            background-color: #e7f4e4; /* Light green background */
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #d4d4d4;
+            display: inline-block;
+            }
+        #totalBDsDisplayContainer strong {
+            color: #5cb85c; /* Green color for the label */
+            font-size: 16px;
+            }
+        #totalBDsDisplay {
+            font-weight: bold;
+            color: #333; /* Darker text for the number */
+            font-size: 16px;
+        }
+        /* Style for the Hourly Wage Dropdown and its Label */
+        .label-hourly-wage {
+            display: block;
+            margin-top: 20px;
+            color: #333;
+            font-size: 16px;
+        }
+
+        #hourlyWageSelection {
+            margin: 5px 0 15px;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            width: calc(100%);
+            font-size: 16px;
+        }
+        /* Style for the total sum row */
+        .total-sum-row {
+            font-weight: bold;
+        }
+        .tooltip {
+            position: relative;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .tooltip sup {
+            font-size: smaller;
+            color: black;
+            background-color: lightblue;
+            border-radius: 50%; /* Circular shape */
+            padding: 0 3px; /* Adjust padding to get the desired circle size */
+            vertical-align: top;
+            line-height: normal;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 400px; /* Adjust the percentage as needed */
+            white-space: normal;
+            background-color: #e6f7ff;
+            color: #000;
+            text-align: block;
+            border-radius: 6px;
+            padding: 10px 15px;
+            position: absolute;
+            z-index: 1;
+            top: 130%; /* Position it below the element */
+            left: 50%; /* Start from the middle of the element */
+            margin-left: -200px; /* Shift it back by half its width to center it */
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-family: Arial, sans-serif; /* Example of a narrower font */
+            font-weight: normal; /* Adjust font-weight as needed */
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+        /* General container style */
+        .container {
+            max-width: 1000px; /* Adjust as needed */
+            margin: auto;
+            padding: 20px;
+        }
+
+        input[type="submit"] {
+            margin-bottom: 10px; /* Add space at the bottom  */
+        }
+            
+        input[type="reset"] {
+            margin-top: 10px; /* Add space on top */
+            margin-bottom: 30px; /* Add space at the bottom  */
+        }
+        /* Mobile-specific styles */
+        @media screen and (max-width: 768px) {
+            .container {
+                padding: 0; /* Remove padding or set it to a smaller value */
+            }
+
+            input[type="number"], select, input[type="submit"], input[type="reset"] {
+                width: calc(100% - 23px); 
+            }
+
+            /* Reduce padding or margins as needed on smaller screens for other elements */
+            .info, form {
+                padding: 5px;
+            }
+            /* Add margin to the bottom of the first button to separate them when stacked */
+            input[type="submit"]:first-of-type {
+                margin-bottom: 40px; /* Adjust the value as needed */
+            }
+        
+        }
+
+        /* Style for horizontal scrolling on tables */
+        .table-responsive {
+            width: 100%; /* Use 100% width */
+            overflow-x: auto; /* Enable horizontal scroll if table is wider */
+            -webkit-overflow-scrolling: touch; /* Smooth scrolling on touch devices */
+        }
+        table {
+            max-width: 100%; /* This ensures the table is not wider than its container */
+            border-collapse: collapse;
+        }
+        
+        /* Ensure that the results container allows for horizontal scrolling */
+        #results {
+            background-color: #fff; /* Set to white or the color you prefer */
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .advanced-section {
+            margin-top: 0px;
+            margin-bottom: 25px;
+            background-color: #e0f2f1; /* Slight variation in color */
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .advanced-dropdown {
+            margin: 5px 0px 15px;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #bbb; /* Slightly different border color */
+            background-color: #f0f0f0; /* Lighter background */
+            width: calc(100%);
+        }
+        .number-input {
+            margin: 5px 0 15px;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd; /* Consistent border */
+            width: calc(100% - 23px);
+            font-size: 16px; /* Consistent font size */
+        }
+        /* Style for the Entgeltfortzahlung section */
+        .entgeltfortzahlung-section {
+            background-color: #fff; /* Match form background */
+            padding: 15px; /* Padding inside the section */
+            border-radius: 8px; /* Rounded corners like form */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Shadow like form */
+            margin-top: 20px; /* Space above the section */
+        }
+
+        .entgeltfortzahlung-section h4 {
+            color: #333;
+            margin-bottom: 10px; /* Space below the heading */
+        }
+
+        /* Style for the table within the Entgeltfortzahlung section */
+        .entgeltfortzahlung-section table {
+            width: 100%; /* Full width of the section */
+            border-collapse: collapse; /* Collapse borders */
+            margin-top: 10px; /* Space above the table */
+            table-layout: fixed; /* This ensures columns are evenly spaced */
+        }
+
+        .entgeltfortzahlung-section th, .entgeltfortzahlung-section td {
+            text-align: left;
+            padding: 8px; /* Padding inside cells */
+            border-bottom: 1px solid #ddd; /* Bottom border for cells */
+        }
+
+        .entgeltfortzahlung-section tr:nth-child(even) {
+            background-color: #f2f2f2; /* Zebra striping for rows */
+        }
+
+        .entgeltfortzahlung-section input[type="number"] {
+            padding: 8px; /* Padding inside input fields */
+            border-radius: 4px; /* Rounded corners for input fields */
+            border: 1px solid #ddd; /* Border for input fields */
+            width: 100%; /* Full width of the cell */
+        }
+        
+        #entgeltfortzahlungInputs {
+            /* height: 300px; /* Adjust the height as needed */
+            overflow-x: auto; /* Enable horizontal scrolling */
+        }
+        /* Entgeltfortzahlung Section Adjustments */
+        #entgeltfortzahlungInputs .dropdown-container select {
+            width: calc(100%); /* Adjust width to match other dropdowns */
+        }
+
+        .footnote {
+            font-size: 14px; /* Smaller font size for footnotes */
+            color: #555; /* A slightly lighter color for readability */
+            margin-top: 20px; /* Space above the footnote */
+            padding-left: 20px; /* Padding to the left for indent */
+        }
+        
+        .footnote sup {
+            font-size: 10px; /* Even smaller font size for the number */
+            line-height: normal; /* Adjust line height to align with the text */
+        }
+        
+        .footnote a {
+            text-decoration: none; /* Remove underlines from links */
+            color: #555; /* Same color as the text for consistency */
+        }
+        
+        .footnote a:hover {
+            text-decoration: underline; /* Underline on hover for clarity */
+        }
+        
