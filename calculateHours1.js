@@ -12,8 +12,9 @@ const wageValues = {
 const categoryNamesMapping = {
     BD: "Bereitschaft 95%",
     Nacht25: "Nachtarbeit BD 25%",
-    Nacht40: "Nachtarbeit BD 40%",
     Sonntag: "Sonntagsarbeit",
+    Nacht40: "Nachtarbeit BD 40%",
+    SamstagBD30: "Samstag BD 30% (ab 2024)", 
     SonntagBD: "Sonntagsarbeit BD 25%",
     FeiertagAktiv35: "Feiertag m. FZA 35%",
     Feiertag25: "Feiertagsarbeit BD 25%"
@@ -23,7 +24,7 @@ const categoryNamesMapping = {
 const rates = {
     MoDo: { BD: 11.75, Rate25: 5, Rate40: 4, TotalTime: 11.75 + 8 },
     Fr: { BD: 13.25, Rate25: 5, Rate40: 4, TotalTime: 13.25 + 8 },
-    Sa: { BD: 19, Rate25: 5, Rate40: 4, SamstagExtra: 0.5, SamstagBD25: 8.75, TotalTime: 19 + 5.25 },
+    Sa: { BD: 19, Rate25: 5, Rate40: 4, SamstagExtra: 0.5, SamstagBD25: 8.75, SamstagBD30: 10.25, TotalTime: 19 + 5.25 }, // SamstagBD25 = die Sonntagsstunden durch einen Samstagsdienst!!!!
     So: { BD: 18, Rate25: 5, Rate40: 4, Sonntag: 4.25, SonntagBD: 10.25, TotalTime: 18 + 5.25 },
     Feiertag: { BD: 18, Rate25: 5, Rate40: 4, Feiertag35: 4.75, Feiertag25: 10.25, TotalTime: 18 + 5.25 }
 };
@@ -35,7 +36,8 @@ const factors = {
     Nacht40: 0.4, 
     SonntagBD: 0.25,
     Sonntag: 0.25, 
-    Feiertag: 0.35
+    Feiertag: 0.35,
+    SamstagBD30: 0.30
 };
 
 const tooltipExplanations = {
@@ -315,6 +317,7 @@ function calculateHours(inputDays, hourlyWage) {
         BD: 0,
         Nacht25: 0,
         Nacht40: 0,
+        SamstagBD30: 0, 
         Sonntag: 0,
         SonntagBD: 0,
         FeiertagAktiv35: 0,
@@ -366,8 +369,12 @@ function calculateHours(inputDays, hourlyWage) {
             if (dayType === 'Sa') {
                 output.Sonntag += days * rate.SamstagExtra;
                 output.SonntagBD += days * rate.SamstagBD25;
+                output.SamstagBD30 = days * rate.SamstagBD30;
+                
                 output.hoursWorked.Sonntag = (output.hoursWorked.Sonntag || 0) + days * rate.SamstagExtra;
                 output.hoursWorked.SonntagBD = (output.hoursWorked.SonntagBD || 0) + days * rate.SamstagBD25;
+                output.hoursWorked.SamstagBD30 = (output.hoursWorked.SamstagBD30 || 0) + days * rate.SamstagBD30;
+                console.log(`Calculated Samstag BD 30%: ${output.SamstagBD30}`);
             }
 
             if (dayType === 'So') {
@@ -467,11 +474,12 @@ function calculateHours(inputDays, hourlyWage) {
     output.results = {
         BD: output.BD,
         Nacht25: output.Nacht25,
-        Nacht40: output.Nacht40,
         Sonntag: output.Sonntag,
+        Nacht40: output.Nacht40,
+        SamstagBD30: output.SamstagBD30,
         SonntagBD: output.SonntagBD,
         FeiertagAktiv35: output.FeiertagAktiv35,
-        Feiertag25: output.Feiertag25,
+        Feiertag25: output.Feiertag25
     };
 
     // Logging individual output.X values
@@ -558,8 +566,6 @@ function sumInputValues(ids) {
     return ids.reduce((sum, id) => sum + (parseFloat(document.getElementById(id).value) || 0), 0);
 }
 
-
-
 // Event listener for form submission
 document.getElementById('hoursForm').addEventListener('submit', function(event) {
     event.preventDefault();
@@ -622,14 +628,13 @@ document.getElementById('hoursForm').addEventListener('submit', function(event) 
         if (category !== "BDPlusResults" && category !== "AdditionalOnCallBonuses" && 
         !(category === "FeiertagAktiv35" || category === "Feiertag25")) {
                 
-        const categoryHoursWorked = output.hoursWorked[category] || 0; // Get the hours worked for each category
+            const categoryHoursWorked = output.hoursWorked[category] || 0; // Get the hours worked for each category
             const categoryFactor = factors[category] || 0;
             const categoryResult = output.results[category].result || 0; // Using the calculated result
             const product = categoryHoursWorked * categoryFactor; // Calculate the product of Anzahl and Faktor
             const faktorBetragProduct = categoryFactor * hourlyWage; // Calculate the product of Faktor and Betrag/E.
 
             console.log(`Category: ${category}, Hours Worked: ${categoryHoursWorked}, Factor: ${categoryFactor}, Product: ${product}, Result: ${categoryResult}`);
-
             sumOfResults += categoryResult; // Add to the sum
 
             // Use the mapping to get the display name
@@ -789,12 +794,8 @@ document.getElementById('hoursForm').addEventListener('submit', function(event) 
         `;
         sumOfResults += fullSum;
     }
+    document.getElementById('results').innerHTML = resultsHTML;
 
-        // ... existing code to finalize resultsHTML ...
-
-        document.getElementById('results').innerHTML = resultsHTML;
-
-    // Add final row for sum of results with a class for styling
     resultsHTML += `
     <tr class="total-sum-row">
         <td colspan="6">Summe der Nachberechnungen</td>
