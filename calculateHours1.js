@@ -23,7 +23,7 @@ const categoryNamesMapping = {
 // Define the base rates
 const rates = {
     MoDo: { BD: 11.75, Rate25: 5, Rate40: 4, TotalTime: 11.75 + 8 },
-    Fr: { BD: 13.25, Rate25: 5, Rate40: 4, TotalTime: 13.25 + 8 },
+    Fr: { BD: 13.25, Rate25: 5, Rate40: 4, SamstagBD30: 9.25, TotalTime: 13.25 + 8 },
     Sa: { BD: 19, Rate25: 5, Rate40: 4, SamstagExtra: 0.5, SamstagBD25: 8.75, SamstagBD30: 10.25, TotalTime: 19 + 5.25 }, // SamstagBD25 = die Sonntagsstunden durch einen Samstagsdienst!!!!
     So: { BD: 18, Rate25: 5, Rate40: 4, Sonntag: 4.25, SonntagBD: 10.25, TotalTime: 18 + 5.25 },
     Feiertag: { BD: 18, Rate25: 5, Rate40: 4, Feiertag35: 4.75, Feiertag25: 10.25, TotalTime: 18 + 5.25 }
@@ -366,16 +366,25 @@ function calculateHours(inputDays, hourlyWage) {
             output.hoursWorked.Nacht25 = (output.hoursWorked.Nacht25 || 0) + days * rate.Rate25;
             output.hoursWorked.Nacht40 = (output.hoursWorked.Nacht40 || 0) + days * rate.Rate40;
 
+            // Specific logic for Fridays contributing to Saturday
+            if (dayType === 'Fr') {
+                const samstagFromFriday = days * rate.SamstagBD30;
+                output.SamstagBD30 = (output.SamstagBD30 || 0) + samstagFromFriday;
+                output.hoursWorked.SamstagBD30 = (output.hoursWorked.SamstagBD30 || 0) + days * rate.SamstagBD30;
+                console.log(`Calculated Samstag BD 30% durch Freitag: ${samstagFromFriday}`);
+            }
+            
             if (dayType === 'Sa') {
                 output.Sonntag += days * rate.SamstagExtra;
                 output.SonntagBD += days * rate.SamstagBD25;
-                output.SamstagBD30 = days * rate.SamstagBD30;
+                output.SamstagBD30 = (output.SamstagBD30 || 0) + days * rate.SamstagBD30;
                 
                 output.hoursWorked.Sonntag = (output.hoursWorked.Sonntag || 0) + days * rate.SamstagExtra;
                 output.hoursWorked.SonntagBD = (output.hoursWorked.SonntagBD || 0) + days * rate.SamstagBD25;
                 output.hoursWorked.SamstagBD30 = (output.hoursWorked.SamstagBD30 || 0) + days * rate.SamstagBD30;
                 console.log(`Calculated Samstag BD 30%: ${output.SamstagBD30}`);
             }
+            
 
             if (dayType === 'So') {
                 output.Sonntag += days * rate.Sonntag;
@@ -483,16 +492,16 @@ function calculateHours(inputDays, hourlyWage) {
     };
 
     // Logging individual output.X values
-    console.log("BD value:", output.BD);
-    console.log("Nacht25 value:", output.Nacht25);
-    console.log("Nacht40 value:", output.Nacht40);
-    console.log("Sonntag value:", output.Sonntag);
-    console.log("SonntagBD value:", output.SonntagBD);
-    console.log("FeiertagAktiv35 value:", output.FeiertagAktiv35);
-    console.log("Feiertag25 value:", output.Feiertag25);
+    // console.log("BD value:", output.BD);
+    // console.log("Nacht25 value:", output.Nacht25);
+    // console.log("Nacht40 value:", output.Nacht40);
+    // console.log("Sonntag value:", output.Sonntag);
+    // console.log("SonntagBD value:", output.SonntagBD);
+    // console.log("FeiertagAktiv35 value:", output.FeiertagAktiv35);
+    // console.log("Feiertag25 value:", output.Feiertag25);
 
     // Log the rates used for each day type
-    console.log("Rates used ANZAHL?:", output.ratesUsed);
+    // console.log("Rates used ANZAHL?:", output.ratesUsed);
     
     console.log("Final output result:", output);
  
