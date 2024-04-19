@@ -680,6 +680,7 @@ document.getElementById('hoursForm').addEventListener('submit', function(event) 
                     <td>${hourlyWage.toFixed(2)}</td>
                     <td>${bdPlusResult.value.toFixed(2)}</td>
                 </tr>`;
+            sumOfResults += bdPlusResult.value;
         }
     });
 
